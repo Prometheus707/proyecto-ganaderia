@@ -1,0 +1,129 @@
+           Quagga.init({
+                inputStream: {
+                    name: "Live",
+                    type: "LiveStream",
+                    target: document.querySelector('#barcode-scanner'),
+                    constraints: {
+                      width: 480,
+                      height: 320,
+                      facingMode: "environment"
+                    },
+                    area: { // ajusta esta área según las especificaciones de tu lector de códigos de barras
+                      top: "0%",
+                      right: "0%",
+                      left: "0%",
+                      bottom: "0%"
+                    },
+                    singleChannel: false // establece esto a true si tu lector de códigos de barras solo admite un canal
+                },
+                locator: {
+                    patchSize: "medium",
+                    halfSample: true
+                },
+                decoder: {
+                    readers: ["ean_reader"]
+                }
+            }, function(err) {
+                if (err) {
+                    console.error(err);
+                    return;
+                }
+                console.log("QuaggaJS init successful, starting.");
+                Quagga.start();
+            });
+
+            // Evento cuando se detecta un código de barras
+            Quagga.onDetected(function(result) {
+                var code = result.codeResult.code;
+                console.log("Código de barras leído: " + code);
+
+                // Puedes realizar acciones adicionales con el código leído aquí
+
+                // Detener Quagga después de haber leído un código (puedes ajustar esto según tus necesidades)
+                Quagga.stop();
+            });
+
+
+
+                    <?php
+        /*
+            // Incluye el archivo1.php que contiene la función
+            include('../controlador/reproduccionctrl.php');
+            $conn=Conectarse();
+
+            // Ejemplo de uso de la función
+            $dato = 66666666; // Cambia esto por el valor que desees buscar
+
+            // Verifica la conexión
+            if ($conn->connect_error) {
+                die("Conexión fallida: " . $conn->connect_error);
+            }
+
+            // Llama a la función
+            procesarDato($dato, $conn);
+            
+
+            // Cierra la conexión
+            $conn->close();
+            */
+        ?>
+
+        ///////////////////////////////////////////////////////////////////
+        function procesarDato($dato, $conn) {
+
+		// Escapar el dato para prevenir inyección de SQL
+		$id_a_buscar = $dato;
+		$conex = $conn;
+
+		// Consulta SQL para buscar el registro por ID
+		$sql = "SELECT idPajilla, numeroRegistro, nombrePajilla, razaPajilla FROM pajilla WHERE numeroRegistro = $id_a_buscar";
+		$result = $conex->query($sql);
+
+		// Verificar si se encontró algún resultado
+		if ($result->num_rows > 0) {
+		  // Recorrer los resultados y hacer algo con ellos
+		  while ($row = $result->fetch_assoc()) {
+			// Acceder a los campos de la fila
+			$id = $row["idPajilla"];
+			$numReg = $row["numeroRegistro"];
+			$nombreToro = $row["nombrePajilla"];
+			$razaToro = $row["razaPajilla"];
+			// Puedes hacer algo con los datos, por ejemplo, imprimirlos
+			echo "id es: ". $id ." su numero de registro es: ". $numReg ." su nombre es: ". $nombreToro ." su raza es: ".$razaToro;
+		
+	    }
+		} else {
+		  echo "No se encontraron resultados para el ID $id_a_buscar";
+
+		  
+		}
+		
+	}
+
+
+
+
+
+
+    //////////////////////////////////listar informacion en tablas ////////////////////////////////
+    	// Realizar la consulta a la base de datos
+			$query = "SELECT codigoVacaRep, nombreVacaRep, razaVacaRep FROM servicio ";
+			$result = mysqli_query($conn, $query);
+
+			// Crear un array para almacenar los resultados
+			$data = array();
+
+			// Obtener los datos de la consulta
+			while ($row = mysqli_fetch_assoc($result)) {
+				$data[] = $row;
+			}
+
+			// Liberar el resultado
+			mysqli_free_result($result);
+
+			// Cerrar la conexión a la base de datos
+			mysqli_close($conn);
+
+			// Devolver los datos en formato JSON
+			echo json_encode($data);
+
