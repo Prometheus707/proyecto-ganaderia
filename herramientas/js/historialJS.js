@@ -26,7 +26,7 @@ $(document).ready(function(){
 
 
 	$(document).on("click", "#divChekeo",function (){
-		alert("entramos")
+		alert("LIMPIANDO!!!!!!!!!!!!!!!!!!!")
 		$("#servido").val(0),
 		$("#metodos").val(0),
 		$("#codigoRegistroT").val(""),
