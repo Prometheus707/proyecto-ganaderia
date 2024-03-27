@@ -1,3 +1,8 @@
+esto es prueba
+
+
+
+
 	alert("cargando...!!!");
 	// $("#selectMetodos option[value=0]").attr("selected",true);
 	$("#DivMetodo").hide(); 
