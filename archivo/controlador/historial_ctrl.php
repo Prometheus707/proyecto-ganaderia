@@ -1,4 +1,5 @@
 <?php
+//http://localhost/AdminLTE/pages/UI/ribbons.html
 header('Cache-Control: no-cache, must-revalidate');
 include('../../include/parametros_index.php');
 date_default_timezone_set('America/Bogota');
@@ -10,14 +11,16 @@ switch ($_REQUEST['action'])
 	{
 		case 'buscarID':
 			$jTableResult = array();
-			    $jTableResult['idAnimalHistorial']="";
 				$jTableResult['codAnimal']="";
 				$jTableResult['nombreAnimal']="";
 				$jTableResult['idUnidad_FK']="";
-				$jTableResult['nombreUnidadPro']="";	
-				$jTableResult['idnombreRazaHistorial']="";
-				$jTableResult['nombreRazaHistorial']="";
-				$query = "SELECT animales.idAnimal, animales.idRaza_FK, animales.codAnimal, animales.nombreAnimal, animales.idUnidad_FK,
+				$jTableResult['nombreUnidadPro']="";
+				$jTableResult['idAnimal2']="";
+				$jTableResult['idAnimalFK']="";
+				$jTableResult['ttlVacunas']="";
+				$jTableResult['ttlServicio']="";
+				$_SESSION['idAnimalCheKeo'] = $_POST['idAnimalBusqueda'];
+				$query = "SELECT animales.idAnimal, animales.codAnimal, animales.nombreAnimal, animales.idUnidad_FK,
 				unidades.nombreUnidadPro 
 				FROM  animales INNER JOIN  unidades ON unidades.idUnidadPro = animales.idUnidad_FK  
 				WHERE animales.idAnimal='".$_POST['idAnimalBusqueda']."'; ";
@@ -29,26 +32,23 @@ switch ($_REQUEST['action'])
 						$jTableResult['result']= "0";						
 					}
 				else
-					{//
+					{
 						while($registro = mysqli_fetch_array($resultado))
 							{
-								
-								$jTableResult['codAnimal']=$registro['codAnimal'];
-								$jTableResult['idAnimalHistorial']=$registro['idAnimal'];
-								$jTableResult['nombreAnimal']=$registro['nombreAnimal'];
+								$jTableResult['codAnimal']="Cod: ".$registro['codAnimal'];
+								$jTableResult['nombreAnimal']="Nombre: ".$registro['nombreAnimal'];
 								$jTableResult['idUnidad_FK']=$registro['idUnidad_FK'];
-								$jTableResult['nombreUnidadPro']=$registro['nombreUnidadPro'];	
-								$jTableResult['idnombreRazaHistorial']=$registro['idRaza_FK'];	
+								$jTableResult['nombreUnidadPro']="Unidad: ".$registro['nombreUnidadPro'];	
+								$jTableResult['idAnimal2']=$registro['idAnimal'];
+								$jTableResult['idAnimalFK']=$registro['idAnimal'];
+								$jTableResult['idAnimalCelo_fk']=$registro['idAnimal'];
 							}
 					}
+				$query="SELECT idReproduccion from servicio WHERE codigoVacaRep='".$_POST['idAnimalBusqueda']."';";
+				$resultado=mysqli_query($conn, $query);
+				$numeroSer=mysqli_num_rows($resultado);
+				$jTableResult['ttlServicio']=$numeroSer;
 				
-				//BUSCAR LA RAZA
-				$query=" SELECT nombreRaza from raza where idRaza='".$jTableResult['idnombreRazaHistorial']."';"; // cambiar el nombre de la tabla y los campos de la tabla
-				$resultado = mysqli_query($conn, $query);
-				while($registro = mysqli_fetch_array($resultado))
-					{
-						$jTableResult['nombreRazaHistorial']=$registro['nombreRaza']; //cambiar datos por los de la tabla
-					}		
 			print json_encode($jTableResult);
 		break;
 		case 'listarAnimales':
@@ -58,11 +58,13 @@ switch ($_REQUEST['action'])
 				$jTableResult['cantidad']="";
 				$jTableResult['listaAnimales']="";
 				$var_dato = "%".$_POST['dato_txt']."%";
+				$varEstadoVM = $_POST['selectVM'];
 				$query = "SELECT animales.idAnimal, animales.codAnimal, animales.nombreAnimal, animales.idUnidad_FK,   unidades.nombreUnidadPro 
 				FROM  animales INNER JOIN  unidades ON unidades.idUnidadPro = animales.idUnidad_FK  
-				WHERE animales.codAnimal 	like '".$var_dato."' 
+				WHERE ( animales.codAnimal 	like '".$var_dato."' 
 				OR animales.nombreAnimal 	like '".$var_dato."' 
-				OR unidades.nombreUnidadPro like '".$var_dato."';";
+				OR unidades.nombreUnidadPro like '".$var_dato."' )  
+				AND animales.estadoVM='".$varEstadoVM."';";				
 				$resultado = mysqli_query($conn, $query);
 				$numero = mysqli_num_rows($resultado);
 				if($numero==0){
@@ -86,7 +88,7 @@ switch ($_REQUEST['action'])
 											class='btn btn-success'
 											data-toggle='modal' 
 											data-idanimal='".$registro['idAnimal']."' 
-											title='Ver Historial ( ".$registro['nombreAnimal']." )'>
+											title='Ver Historial (".$registro['nombreAnimal'].")'>
 											<i class='fa fa-folder-o' aria-hidden='true'></i> Historial
 										</button>
 									</td>

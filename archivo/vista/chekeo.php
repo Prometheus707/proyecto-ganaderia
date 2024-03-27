@@ -109,7 +109,6 @@ $fecha_Banner = date("Y-m-d"); ?>
 						</div>
 					</div>
 				</div>
-
                 <!--INICIO FORMULARIO SERVICIOS--->
 				<div class="container"> 
 					<div class="modal fade" id="mdreproduccion" tabindex="-1" role="dialog" aria-labelledby="exampleModalabel" aria-hidden="true">

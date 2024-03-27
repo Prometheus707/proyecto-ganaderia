@@ -113,7 +113,7 @@ $(document).ready(function(){
 						ok("Entrando al sistema..")
 						ok("Credenciales correctas...")
 						//setTimeout(function(){
-							location.href="../../../ganaderia2023/archivo/vista/inicio.php";
+							location.href="../../../cambioGuardarGananderia/archivo/vista/inicio.php";
 							//alert('../../../ganaderia2023/archivo/vista/inicio.php');
 						//}, 2000);
 						}else{	error(data.msj_DelSistema);	}

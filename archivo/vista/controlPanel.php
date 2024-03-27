@@ -9,7 +9,7 @@
 			<i class="fa fa-search-plus" aria-hidden="true"></i></button>
 		</div>
 		<div class="col-sm-2" >
-			<button type="button" name='btn_Nuevo' id='btn_Nuevo'  <?php echo $var_class_button_warnigN; ?> data-toggle="modal" data-target="#mdreproduccion"  >
+			<button type="button" name='btn_Nuevo' id='btn_Nuevo'  <?php echo $var_class_button_warnigN; ?> data-toggle="modal" data-target="#ppNuevoRegistro"  >
 			<i class="fa fa-plus" aria-hidden="true"></i></button>
 		</div>		
 	</div>

@@ -1,5 +1,6 @@
 	<!-- Inicio Modal pajilla-->
-	<div class="modal fade" id="modalPajilla" role="dialog" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >
+	<!--<div id="addRaza"   		class="modal fade" role="dialog" >--> 
+	<div id="registroPajilla" 	class="modal fade"  >		
 		<div class="modal-dialog modal-dialog-scrollable">
 			<div class="modal-content">
 				<!-- inicio cabecera del diálogo -->
@@ -9,20 +10,20 @@
 				</div>
 				<!-- el cuerpo del modal -->
 				<div class="modal-body">
-					<div class="row-12">
-						<div class="col-sm-12" >
+					<div class="row">
+						<div class="col" >
 							<h6 class="modal-title" >Numero de registro</h6>
 							<input  type="text" class="form-control" id="numeroRegistroR" >
 						</div>
 					</div>
-					<div class="row-12">
-						<div class="col-sm-12" >
+					<div class="row">
+						<div class="col" >
 							<h6 class="modal-title" >Nombre toro</h6>
 							<input  type="text"  class="form-control" id="nombreToroR">
 						</div>
 					</div>
-					<div class="row-12">
-						<div class="col-sm-12" >
+					<div class="row">
+						<div class="col" >
 							<h6 class="modal-title" >Raza toro</h6>
 						<select class="form-select" aria-label="Default select example" id="razaPajilla" >
 

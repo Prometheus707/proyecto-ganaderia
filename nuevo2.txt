@@ -1,0 +1,73 @@
+	alert("cargando...!!!");
+	// $("#selectMetodos option[value=0]").attr("selected",true);
+	$("#DivMetodo").hide(); 
+	// $("#selectMetodos").hide(); 
+	// $("#infoToro").hide(); 
+	// $("#divBtnPajilla").hide(); 
+	// $("#fechaCeloVaca").datepicker();
+	
+	// $(document).on("click", "#divChekeo",function (){      
+		// $("#infoToro").hide(500),
+		// $("#codigoToro").hide(500),
+		// $("#metodo").hide(500),
+		// $("#nombreToro").hide(500),
+		// $("#razaToro").hide(500),
+		// $("#codigoRegistroT").find('option').remove().end(),
+		// $("#divBtnPajilla").hide(500);
+		// $("#fechaCeloVaca").datepicker();
+		// alert("entramos a servicios");
+	// });	
+	$(document).on("change", "#selectServido",function (){   
+		// var varservido = $(this).val();
+		alert("dentro...!!");
+	});
+		// if(varservido==1){ 
+			// $("#DivMetodo").show(500);
+			// $("#infoToro").show(500);
+			// $("#codigoToro").show("slow");
+			// $("#metodo").show("slow");
+			// $("#nombreToro").show("slow");
+			// $("#razaToro").show("slow");
+			// $("#fechaChequeo").show("slow");
+			// $("#fechaProbableP").show("slow");
+			// $("#fechaRealP").show("slow");
+			// $("#sexoCria").show("slow");
+			// $("#tituloParto").show("slow");
+			// $("#numeroServicios").show(1000);
+			// $("#metodos").val(0);
+		// }else{ 
+			// $("#DivMetodo").hide(500);
+			// $("#infoToro").hide(500);
+			// $("#codigoToro").hide(500);
+			// $("#metodo").hide(500);
+			// $("#nombreToro").hide(500);
+			// $("#razaToro").hide(500);
+			// $("#divBtnPajilla").hide(500);
+			// $("#observacionesRep").show("slow");
+			// $("#codigoRegistroT").find('option').remove().end();
+			// $("#codigoRegistroT").val()=="";
+			// $("#metodos").val("");
+			// $("#codigoRegistroT").val("");
+			// $("#nomToro").val("");
+			// $("#razToro").val("");
+			// $("#idRazaServ").val("");
+			// $("#idToroServ").val(""); 
+		// }		
+
+	
+	// $(document).on("change", "#selectMetodos",function (){ 
+	    // var metodosRep = $(this).val();
+		// alert(metodosRep);
+        // $.post("../controlador/reproduccionctrl.php", {
+          // action:'listarTipo',
+          // tipoEnsiminacion: metodosRep 
+            // }, function(data){
+              // $("#codigoRegistroT").html(data.tipo);		
+            // }, 'json');
+        // if ( metodosRep == 1 || metodosRep == 2 || metodosRep == 0 ){
+			// $("#nomToro").val("");
+			// $("#razToro").val("");
+			// $("#idRazaServ").val("");
+			// $("#idToroServ").val("");
+        // }       
+    // }); 	

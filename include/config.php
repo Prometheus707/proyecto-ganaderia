@@ -8,5 +8,4 @@
 	$username 		= "root";
 	$password 		= "root";
 	//driver database
-?>
-
+?> 

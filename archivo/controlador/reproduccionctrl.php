@@ -5,10 +5,339 @@
 	include('../../include/conex.php');
 	session_start();
 	$conn=Conectarse();
-	//$horaTime = date("H:i:s");
+	//$horaTime =date("H:i:s");
+	// echo "action :  ".$_REQUEST['action']; exit();
 	Switch ($_REQUEST['action']) 
-	{
+	{ 
+		case 'numCelosF':
+			$jTableResult = array();
+				$jTableResult['ttlServicioF']="";
 
+				$query="SELECT idReproduccion from servicio WHERE codigoVacaRep='".$_POST['idAnimalTtlF']."';";
+					$resultado=mysqli_query($conn, $query);
+					$numeroSer=mysqli_num_rows($resultado);
+					$jTableResult['ttlServicioF']=$numeroSer;
+			print json_encode($jTableResult);
+		break;
+	
+		case 'buscarCeloUpdate'://BUSCAR INFORMACION PARA LLENAR FORMULARIO A ACTUALIZAR
+			$jTableResult = array();
+				$jTableResult['numeroRegistroPa']="";
+				$jTableResult['nombreToroPa']="";
+				$jTableResult['razaListaPajillaAid']="";
+				$jTableResult['idPajlaUp']="";
+				$query ="SELECT idPajilla, numeroRegistro, nombrePajilla, razaPajilla FROM pajilla WHERE idPajilla = '".$_POST['idPajiUpdate']."';";
+				$resultado = mysqli_query($conn, $query);
+				while($registro = mysqli_fetch_array($resultado))
+					{
+						$jTableResult['numeroRegistroPa']=$registro['numeroRegistro']; //cambiar datos por los de la tabla
+						$jTableResult['nombreToroPa']=$registro['nombrePajilla'];
+						$jTableResult['razaListaPajillaAid']=$registro['razaPajilla'];
+						$jTableResult['idPajlaUp']=$registro['idPajilla'];
+					}		
+			print json_encode($jTableResult);
+		break;
+		//arrelo lista de tarjetas que se muestran de con boton monta
+		case 'arregloMonta':
+				$jTableResult = array();
+					$jTableResult['tabsMonta']="";
+					$query="SELECT servicio.idReproduccion,
+					servicio.codigoVacaRep,
+					animales.nombreAnimal as nombreAnimMonta,
+					servicio.fechaCelo, 
+					servicio.servido,
+					servicio.metodoRep,
+					servicio.numeroRegistroM,
+					servicio.observacionesServ
+					FROM servicio
+					INNER JOIN animales  
+					ON servicio.numeroRegistroM = animales.idAnimal
+					WHERE  metodoRep = 1  AND codigoVacaRep ='".$_POST['idAnimalListCelo']."';";
+					$resultado = mysqli_query($conn, $query);
+					$jTableResult['tabsMonta'] .= "<div class='card'>
+                                    <div class='card-header' style='background-color:$varCabeceraTabla; color: white;'>
+                                        <h5 class='card-title'>LISTA MONTA</h5>
+                                    </div>
+                                    <div class='card-body' style='max-height: 400px; overflow-y: auto;'>
+                    ";
+					while($registro = mysqli_fetch_array($resultado)){ 
+						$jTableResult['tabsMonta'] .= "<div class='card mb-10'>
+                                        <div class='card-body'>
+											<div class='row'>
+											    <!--<div>
+													<input type='text' id='idServicioAn' value='" . $registro['idReproduccion'] . "'>
+												</div>-->
+												
+												<div class='col-sm-3' >
+													<h6 class='modal-title'><strong>Fecha: </strong></h6>
+												</div>												
+												<div class='col-sm-4' >
+													<h6 class='modal-title'>'".$registro['fechaCelo']."'</h6>
+												</div>
+												<div class='col-sm-5 d-flex justify-content-end align-items-center' >
+													<button class='btn' id='btnEliminarCardCel' data-idReproduccion='".$registro['idReproduccion']."'  data-tipo='1' style='background-color: red; color: #fff;'><i class='fa-solid fa-trash'></i></button>
+												</div>								
+											</div>
+											<div class='row'>
+												<div class='col-sm-3' >
+													<h6 class='modal-title font-weight-bold'>Servido: </h6>
+												</div>												
+												<div class='col-sm-3' >
+													<h6 class='modal-title '>'".(($registro['servido'])== '1' ? 'Si' : '')."'</h6>
+													
+												</div>
+											</div>	
+											<div class='row'>
+												<div class='col-sm-3' >
+													<h6 class='modal-title font-weight-bold'>Metodo:</h6>
+												</div>												
+												<div class='col-sm-3' >
+													<h6 class='modal-title'>'".(($registro['metodoRep'])== '1' ? 'Monta' : '')."'</h6>
+												</div>
+											</div>	
+											<div class='row'>
+												<div class='col-sm-4' >
+													<h6 class='modal-title font-weight-bold'>Macho: </h6>
+												</div>												
+												<div class='col-sm-3' >
+													<h6 class='modal-title'>'".$registro['numeroRegistroM']."'</h6>
+												</div>
+											</div>
+											<div class='row'>
+												<div class='col-sm-4' >
+													<h6 class='modal-title font-weight-bold'>Nombre: </h6>
+												</div>												
+												<div class='col-sm-3' >
+													<h6 class='modal-title'>'".$registro['nombreAnimMonta']."'</h6>
+												</div>
+											</div>
+											<div class='row'>
+												<div class='col-sm-4' >
+													<h6 class='modal-title font-weight-bold'>Observaciones:</h6>
+												</div>												
+												<div class='col-sm-8' >
+													<h6 class='modal-title'>'".$registro['observacionesServ']."'</h6>
+												</div>
+											</div>												
+                                        </div>
+                                    </div>";
+						}
+						
+						$jTableResult['tabsMonta'] .= "    </div>
+						</div>";
+		print json_encode($jTableResult);
+		break;
+		//arrelo lista de tarjetas que se muestran de con boton inseminacion
+		case 'arregloInseminacion':
+			$jTableResult = array();
+				$jTableResult['tabsInseminacion']="";
+				$query="SELECT servicio.idReproduccion,
+				servicio.codigoVacaRep,
+				pajilla.nombrePajilla as nombreAnimPajilla,
+				servicio.fechaCelo, 
+				servicio.servido,
+				servicio.metodoRep,
+				servicio.numeroRegistroM,
+				servicio.observacionesServ
+				FROM servicio
+				INNER JOIN pajilla  
+				ON servicio.numeroRegistroM = pajilla.idPajilla
+				WHERE  metodoRep = 2  AND codigoVacaRep ='".$_POST['idAnimalListCeloI']."';";
+				$resultado = mysqli_query($conn, $query);
+				$jTableResult['tabsInseminacion'] .= "<div class='card'>
+                                    <div class='card-header' style='background-color:$varCabeceraTabla; color: white;>
+                                        <h5 class='card-title'>LISTA INSEMINACION</h5>
+                                    </div>
+                                    <div class='card-body' style='max-height: 400px; overflow-y: auto;'>
+                    ";
+				while($registro = mysqli_fetch_array($resultado)){ 
+				$jTableResult['tabsInseminacion'] .= "<div class='card mb-10'>
+                                        <div class='card-body'>
+											<div class='row'>
+												<!--<div>
+													<input type='text' id='idServicioAn' value='" . $registro['idReproduccion'] . "'>
+												</div>-->
+												<div class='col-sm-3' >
+													<h6 class='modal-title'><strong>Fecha: </strong></h6>
+												</div>												
+												<div class='col-sm-4' >
+													<h6 class='modal-title'>'".$registro['fechaCelo']."'</h6>
+												</div>
+												<div class='col-sm-5 d-flex justify-content-end align-items-center' >
+													<button class='btn' id='btnEliminarCardCel' data-idReproduccion='".$registro['idReproduccion']."' data-tipo='2' style='background-color: red; color: #fff;'><i class='fa-solid fa-trash'></i></button>
+												</div>												
+											</div>
+											<div class='row'>
+												<div class='col-sm-3' >
+													<h6 class='modal-title font-weight-bold'>Servido: </h6>
+												</div>												
+												<div class='col-sm-3' >
+													<h6 class='modal-title '>'".(($registro['servido'])== '1' ? 'Si' : '')."'</h6>
+												</div>
+											</div>	
+											<div class='row'>
+												<div class='col-sm-3' >
+													<h6 class='modal-title font-weight-bold'>Metodo:</h6>
+												</div>												
+												<div class='col-sm-3' >
+													<h6 class='modal-title'>'".(($registro['metodoRep'])== '2' ? 'I.A' : '')."'</h6>
+												</div>
+											</div>	
+											<div class='row'>
+												<div class='col-sm-4' >
+													<h6 class='modal-title font-weight-bold'>Macho: </h6>
+												</div>												
+												<div class='col-sm-3' >
+													<h6 class='modal-title'>'".$registro['numeroRegistroM']."'</h6>
+												</div>
+											</div>
+											<div class='row'>
+												<div class='col-sm-4' >
+													<h6 class='modal-title font-weight-bold'>Nombre: </h6>
+												</div>												
+												<div class='col-sm-6' >
+													<h6 class='modal-title'>'".$registro['nombreAnimPajilla']."'</h6>
+												</div>
+											</div>
+											<div class='row'>
+												<div class='col-sm-4' >
+													<h6 class='modal-title font-weight-bold'>Observaciones:</h6>
+												</div>												
+												<div class='col-sm-8' >
+													<h6 class='modal-title'>'".$registro['observacionesServ']."'</h6>
+												</div>
+											</div>												
+                                        </div>
+                                    </div>";
+						}
+						
+						$jTableResult['tabsInseminacion'] .= "    </div>
+						</div>";
+	    print json_encode($jTableResult);
+		break;
+		case 'arregloNoservidos':
+			$jTableResult = array();
+				$jTableResult['tabsNoServidos']="";
+				$query="SELECT servicio.idReproduccion,
+				servicio.codigoVacaRep,
+				servicio.fechaCelo, 
+				servicio.servido,
+				servicio.observacionesServ
+				FROM servicio
+				WHERE  servido = 2  AND codigoVacaRep ='".$_POST['idAnimalListCeloNo']."';";
+				$resultado = mysqli_query($conn, $query);
+				$jTableResult['tabsNoServidos'] .= "<div class='card'>
+                                    <div class='card-header' style='background-color:$varCabeceraTabla; color: white;>
+                                        <h5 class='card-title'>LISTA NO SERVIDO</h5>
+                                    </div>
+                                    <div class='card-body' style='max-height: 400px; overflow-y: auto;'>
+                    ";
+				while($registro = mysqli_fetch_array($resultado)){ 
+				$jTableResult['tabsNoServidos'] .= "<div class='card mb-10'>
+                                        <div class='card-body'>
+											<div class='row'>
+												<!--<div>		
+													<input type='text'  value='" . $registro['idReproduccion'] . "'>
+												</div>-->
+												<div class='col-sm-3' >
+													<h6 class='modal-title'><strong>Fecha: </strong></h6>
+												</div>												
+												<div class='col-sm-4' >
+													<h6 class='modal-title'>'".$registro['fechaCelo']."'</h6>
+												</div>
+												<div class='col-sm-5 d-flex justify-content-end align-items-center' >
+													<button class='btn' id='btnEliminarCardCel' data-idReproduccion='".$registro['idReproduccion']."' data-tipo='3' style='background-color: red; color: #fff;'><i class='fa-solid fa-trash'></i></button>
+												</div>													
+											</div>
+											<div class='row'>
+												<div class='col-sm-3' >
+													<h6 class='modal-title font-weight-bold'>Servido: </h6>
+												</div>												
+												<div class='col-sm-3' >
+													<h6 class='modal-title '>'".(($registro['servido'])== '2' ? 'No' : '')."'</h6>
+												</div>
+											</div>	
+											<div class='row'>
+												<div class='col-sm-4' >
+													<h6 class='modal-title font-weight-bold'>Observaciones:</h6>
+												</div>												
+												<div class='col-sm-8' >
+													<h6 class='modal-title'>'".$registro['observacionesServ']."'</h6>
+												</div>
+											</div>												
+                                        </div>
+                                    </div>";
+						}
+						$jTableResult['tabsNoServidos'] .= "    </div>
+						</div>";
+	    print json_encode($jTableResult);
+		break;
+		case 'arregloPajillaCel':
+			$jTableResult = array();
+				$jTableResult['tabsPajilla']="";
+				$query="SELECT pajilla.idPajilla, 
+				pajilla.fechaRegistroP,
+				pajilla.numeroRegistro, 
+				pajilla.nombrePajilla, 
+				pajilla.razaPajilla, 
+				raza.nombreRaza AS razaPajillaP 
+				FROM pajilla 
+				INNER JOIN raza
+				ON pajilla.razaPajilla = raza.idRaza;";
+				$resultado = mysqli_query($conn, $query);
+				$jTableResult['tabsPajilla'] .= "<div class='card'>
+                                    <div class='card-header' style='background-color:$varCabeceraTabla; color: white;>
+                                        <h5 class='card-title'>LISTA DE PAJILLAS</h5>
+                                    </div>
+                                    <div class='card-body' style='max-height: 400px; overflow-y: auto;'>
+                    ";
+				while($registro = mysqli_fetch_array($resultado)){ 
+				$jTableResult['tabsPajilla'] .= "<div class='card mb-10'>
+                                        <div class='card-body'>
+											<div class='row'>
+												<div class='col-sm-3' >
+													<h6 class='modal-title'><strong>Fecha: </strong></h6>
+												</div>												
+												<div class='col-sm-4' >
+													<h6 class='modal-title'>'".$registro['fechaRegistroP']."'</h6>
+												</div>
+												<div class='col-sm-5 d-flex justify-content-end align-items-center' >
+													<button class='btn' id='btnEliminarCardPajilla' data-pajillaId = '".$registro['idPajilla']."' style='background-color: red; color: #fff; margin-right: 1rem;' ><i class='fa-solid fa-trash'></i></button>
+
+													<button class='btn' id='btnActualizarCardPajilla' data-pajillaIdUpdate = '".$registro['idPajilla']."' style='background-color: red; color: #fff;'  data-toggle='modal' data-target='#actualizarPajilla' ><i class='fa-solid fa-pen-to-square'></i></button>
+												</div>													
+											</div>
+											<div class='row'>
+												<div class='col-sm-3' >
+													<h6 class='modal-title'><strong>N°registro: </strong></h6>
+												</div>												
+												<div class='col-sm-4' >
+													<h6 class='modal-title'>'".$registro['numeroRegistro']."'</h6>
+												</div>
+											</div>
+											<div class='row'>
+												<div class='col-sm-3' >
+													<h6 class='modal-title font-weight-bold'>Nombre: </h6>
+												</div>												
+												<div class='col-sm-3' >
+													<h6 class='modal-title '>'".$registro['nombrePajilla']."'</h6>
+												</div>
+											</div>	
+											<div class='row'>
+												<div class='col-sm-4' >
+													<h6 class='modal-title font-weight-bold'>Raza: </h6>
+												</div>												
+												<div class='col-sm-8' >
+													<h6 class='modal-title'>'".$registro['razaPajillaP']."'</h6>
+												</div>
+											</div>												
+                                        </div>
+                                    </div>";
+						}
+						$jTableResult['tabsPajilla'] .= "    </div>
+						</div>";
+	    print json_encode($jTableResult);
+		break;
 		case 'codigoVaca':
 			$jTableResult = array();
 				$jTableResult['codigoVaca']="";
@@ -21,18 +350,20 @@
 					}				
 			print json_encode($jTableResult);
 		break;
-
-		case 'raza':
+		case 'buscarRazas':
 			$jTableResult = array();
-				$jTableResult['raza']="";
-				$jTableResult['raza']="<option value='0' selected >Seleccione</option>";
+				$jTableResult['listaRaza']="";
+				$jTableResult['listaRaza']="<option value='0' selected >Seleccione</option>";
 				$query=" SELECT idRaza, nombreRaza from raza"; // cambiar el nombre de la tabla y los campos de la tabla
 				$resultado = mysqli_query($conn, $query);
 				while($registro = mysqli_fetch_array($resultado))
 					{
-						$jTableResult['raza'].="<option value='".$registro['idRaza']."'>".$registro['nombreRaza']."</option>"; //cambiar datos por los de la tabla
-
+						$jTableResult['listaRaza'].="<option value='".$registro['idRaza']."'>".$registro['nombreRaza']."</option>"; //cambiar datos por los de la tabla
 					}				
+			// echo "<pre>";
+			// print_r ($jTableResult['listRaza']);
+			// echo "</pre>";
+			// exit();
 			print json_encode($jTableResult);
 		break;
 		case 'cargarServicio':
@@ -43,7 +374,7 @@
 				$jTableResult['codAnimal']="";
 				$jTableResult['idRaza_FK']="";
 				$jTableResult['nombreRaza']="";
-				$query=" SELECT idAnimal, codAnimal, nombreAnimal, idRaza_FK from animales where idAnimal='".$_POST['idanimals']."';"; // cambiar el nombre de la tabla y los campos de la tabla
+				$query="SELECT idAnimal, codAnimal, nombreAnimal, idRaza_FK from animales where idAnimal='".$_POST['idanimals']."';"; // cambiar el nombre de la tabla y los campos de la tabla
 				$resultado = mysqli_query($conn, $query);
 				while($registro = mysqli_fetch_array($resultado))
 					{
@@ -52,8 +383,6 @@
 						$jTableResult['codAnimal']=$registro['codAnimal'];
 						$jTableResult['idRaza_FK']=$registro['idRaza_FK'];
 					}		
-
-			
 				$query=" SELECT nombreRaza from raza where idRaza='".$jTableResult['idRaza_FK']."';"; // cambiar el nombre de la tabla y los campos de la tabla
 				$resultado = mysqli_query($conn, $query);
 				while($registro = mysqli_fetch_array($resultado))
@@ -62,14 +391,12 @@
 					}		
 			print json_encode($jTableResult);
 		break;
-
 		case 'cargarPerson':
 			$jTableResult = array();
 				//echo "id recibido: ".$_POST['idanimals']; exit();
 				$jTableResult['idPersonaS']="";
 			 	$jTableResult['nombrePerson']="";
 				$jTableResult['apellidoPerson']="";
-				
 				$query=" SELECT id_persona, nombre, apellido from persona where id_persona='".$_POST['idPersons']."';"; // cambiar el nombre de la tabla y los campos de la tabla
 				$resultado = mysqli_query($conn, $query);
 				while($registro = mysqli_fetch_array($resultado))
@@ -81,10 +408,7 @@
 
 			print json_encode($jTableResult);
 		break;
-
 		/*case 'decicionServicio':
-
-			
 			$jTableResult = array();
 				//echo "id recibido: ".$_POST['idanimals']; exit();
 				$jTableResult['idAnimal']="";
@@ -111,7 +435,6 @@
 					}		
 			print json_encode($jTableResult);
 		break;*/
-
 		case 'cargarServicioPjailla':
 			$jTableResult = array();
 				//echo "id recibido: ".$_POST['idanimals']; exit();
@@ -131,7 +454,7 @@
 					}		
 
 			
-				$query=" SELECT nombreRaza from raza where idRaza='".$jTableResult['numrazaPajilla']."';"; // cambiar el nombre de la tabla y los campos de la tabla
+				$query="SELECT nombreRaza from raza where idRaza='".$jTableResult['numrazaPajilla']."';"; // cambiar el nombre de la tabla y los campos de la tabla
 				$resultado = mysqli_query($conn, $query);
 				while($registro = mysqli_fetch_array($resultado))
 					{
@@ -139,7 +462,6 @@
 					}		
 			print json_encode($jTableResult);
 		break;
-		
 		case 'cargarRazaPaj':
 			$jTableResult = array();
 				//echo "id recibido: ".$_POST['idRazaPaji']; exit();
@@ -153,8 +475,6 @@
 					}		
 			print json_encode($jTableResult);
 		break;
-		
-		
 		case 'encargado':
 			$jTableResult = array();
 				$jTableResult['encargado']="";
@@ -167,7 +487,6 @@
 					}				
 			print json_encode($jTableResult);
 		break;
-
 		//LISTA DEPENDIENDO SI ES POR MONTA O INSEMINACION
 		case 'listarTipo':
 			$jTableResult = array();				
@@ -176,7 +495,7 @@
 				if($_POST['tipoEnsiminacion']==1){
 					$jTableResult['tipo']="";
 					$jTableResult['tipo']="<option value='0' selected >seleccione:.</option>";
-					$query=" SELECT idAnimal, codAnimal from animales;"; // cambiar el nombre de la tabla y los campos de la tabla
+					$query="SELECT idAnimal, codAnimal from animales WHERE idSexo = 1;"; // cambiar el nombre de la tabla y los campos de la tabla
 					$resultado = mysqli_query($conn, $query);
 					while($registro = mysqli_fetch_array($resultado))
 						{
@@ -193,90 +512,177 @@
 				}								
 			print json_encode($jTableResult);
 		break;
-
-
 		/*REGISTRAR PAJILLA*/ 
 		case 'guardarPajilla':
             $jTableResult = array();
             $jTableResult['msj']="";
             $jTableResult['resultd']="";
-            $query="INSERT INTO pajilla SET 
-                numeroRegistro='".$_POST['codToro']."',
-                nombrePajilla='".$_POST['nombeToro']."',
-				razaPajilla='".$_POST['razaToro']."';"; 
-                if ($resultado=mysqli_query($conn,$query))
-                    {
-                        mysqli_commit($conn);
-                        $jTableResult['msj']="  DATO GUARDADO CORRECTAMENTE";
-                        $jTableResult['resultd']="1";
-                    }
-                else
-                    {
-                        mysqli_rollback($conn);
-                        $jTableResult['msj']="  ERROR AL GUARDAR. INTENTE NUEVAMENTE.";
-                        $jTableResult['resultd']="0";
-                    }
+				$query2 = "SELECT idPajilla  FROM pajilla WHERE numeroRegistro= '".$_POST['numeroRegistroR']."';   ";
+				$resultado = mysqli_query($conn, $query2);
+				$numero = mysqli_num_rows($resultado);
+				if($numero==0) {
+					if(($_POST['numeroRegistroR']=="") or ($_POST['nombreToroP']=="") or ($_POST['idrazaToroP']=="0")){
+						$jTableResult['msj']="CAMPOS OBLIGATORIOSSSSSSSSS";
+						$jTableResult['resultd']="0";
+					}
+					else{
+						$query="INSERT INTO pajilla SET 
+						fechaRegistroP='".$_POST['fechRegPaji']."',
+						razaPajilla='".$_POST['idrazaToroP']."',
+						nombrePajilla='".$_POST['nombreToroP']."',
+						respRegPajilla='".$_POST['idRespRegP']."',
+						numeroRegistro='".$_POST['numeroRegistroR']."';";
+						if ($resultado=mysqli_query($conn,$query)){
+							mysqli_commit($conn);
+							$jTableResult['msj']="  DATO GUARDADO CORRECTAMENTE";
+							$jTableResult['resultd']="1";
+						} else {
+							mysqli_rollback($conn);
+							$jTableResult['msj']="  ERROR AL GUARDAR. INTENTE NUEVAMENTE.";
+							$jTableResult['resultd']="0";
+						}
+					}
+					
+				}else{
+					//mysqli_commit($conn);
+					$jTableResult['msj']="CODIGO DE LA PAJILLA YA EXISTE";
+					$jTableResult['resultd']="0";
+				}                
             print json_encode($jTableResult);
         break;
-
+		case 'actualizarPajilla':
+			$jTableResult = array();
+				$jTableResult['msj']="";
+				$jTableResult['resultd']="";
+				// $query2 = "SELECT idPajilla  FROM pajilla WHERE numeroRegistro= '".$_POST['numRegUpPa']."';   ";
+				// $resultado = mysqli_query($conn, $query2);
+				// $numero = mysqli_num_rows($resultado);
+				// if($numero==0) {
+					$query="UPDATE pajilla SET fechaRegistroP = '".$_POST['fechaRegPaUp']."', 
+					numeroRegistro = '".$_POST['numRegUpPa']."', 
+					nombrePajilla = '".$_POST['nombretUpd']."', 
+					razaPajilla = '".$_POST['razSelPaUp']."' 
+					WHERE idPajilla = '".$_POST['datPajiIdU']."';";
+						$resultado=mysqli_query($conn, $query);
+						if ($resultado=mysqli_query($conn,$query)){
+							mysqli_commit($conn);
+							$jTableResult['msj']="  DATO GUARDADO CORRECTAMENTE";
+							$jTableResult['resultd']="1";
+						} else {
+							mysqli_rollback($conn);
+							$jTableResult['msj']="  ERROR AL GUARDAR. INTENTE NUEVAMENTE.";
+							$jTableResult['resultd']="0";
+						}
+				// }
+				// else{
+				// 	//mysqli_commit($conn);
+				// 	$jTableResult['msj']="CODIGO DE LA PAJILLA YA EXISTE";
+				// 	$jTableResult['resultd']="0";
+				// }            
+			print json_encode($jTableResult);
+		break;
 		/*REGISTRAR REPRODUCCION*/ 
 		case 'guardarCheck':
             $jTableResult = array();
             $jTableResult['msj']="";
             $jTableResult['resultd']="";
-                $query="INSERT INTO servicio SET 
-                codigoVacaRep='".$_POST['codVaca']."',
-                nombreVacaRep='".$_POST['nombeVaca']."',
-				razaVacaRep='".$_POST['razaVaca']."',
-				fechaCelo='".$_POST['fechCelo']."',
-				servido='".$_POST['servicio']."',
-				observacionesServ='".$_POST['observacionesRep']."',
-				idUsuario='".isset($_SESSION['id_Usu'])."';";
-                if ($resultado=mysqli_query($conn,$query))
-                    {
-                        mysqli_commit($conn);
-                        $jTableResult['msj']="  DATO GUARDADO CORRECTAMENTE";
-                        $jTableResult['resultd']="1";
-                    }
-                else
-                    {
-                        mysqli_rollback($conn);
-                        $jTableResult['msj']="  ERROR AL GUARDAR. INTENTE NUEVAMENTE.";
-                        $jTableResult['resultd']="0";
-                    }
-            print json_encode($jTableResult);
+				if (($_POST['servicio']=="") or ($_POST['observacionesRep']=="")){
+					$jTableResult['msj']="TIENES CAMPOS OBLIGATORIOS POR LLENAR";
+					$jTableResult['resultd']="0";
+				}
+				else{
+					$query="INSERT INTO servicio SET 
+					codigoVacaRep='".$_POST['codVaca']."',
+					fechaCelo='".$_POST['fechCelo']."',
+					servido='".$_POST['servicio']."',
+					observacionesServ='".$_POST['observacionesRep']."',
+					idUsuario='".$_POST['idRespCelo']."';";
+					if ($resultado=mysqli_query($conn,$query))
+						{
+							mysqli_commit($conn);
+							$jTableResult['msj']="  DATO GUARDADO CORRECTAMENTE";
+							$jTableResult['resultd']="1";
+						}
+					else
+						{
+							mysqli_rollback($conn);
+							$jTableResult['msj']="  ERROR AL GUARDAR. INTENTE NUEVAMENTE.";
+							$jTableResult['resultd']="0";
+						}
+				}
+			print json_encode($jTableResult);
         break;
 		case 'guardarCheckCompleto':
-		
             $jTableResult = array();
             $jTableResult['msj']="";
             $jTableResult['resultd']="";
-                $query="INSERT INTO servicio SET 
-                codigoVacaRep='".$_POST['codVaca']."',
-                nombreVacaRep='".$_POST['nombeVaca']."',
-				razaVacaRep='".$_POST['razaVaca']."',
-				fechaCelo='".$_POST['fechCelo']."',
-				servido='".$_POST['servicio']."',
-				metodoRep='".$_POST['metodoRep']."',
-				numeroRegistroP='".$_POST['codigoTorP']."',
-				nombreToro='".$_POST['nombreTorP']."',
-				razaToro='".$_POST['razaTorP']."',
-				observacionesServ='".$_POST['observacionesRep']."',
-				idUsuario='".isset($_SESSION['id_Usu'])."';";
-                if ($resultado=mysqli_query($conn,$query))
-                    {
-                        mysqli_commit($conn);
-                        $jTableResult['msj']="  DATO GUARDADO CORRECTAMENTE";
-                        $jTableResult['resultd']="1";
-                    }
-                else
-                    {
-                        mysqli_rollback($conn);
-                        $jTableResult['msj']="  ERROR AL GUARDAR. INTENTE NUEVAMENTE.";
-                        $jTableResult['resultd']="0";
-                    }
+				if(($_POST['servicio']=="") or ($_POST['metodoRep'] =="") or ($_POST['codigoTorP'] ==0)){
+					$jTableResult['msj']="TIENES CAMPOS OBLIGATORIOS POR LLENAR";
+					$jTableResult['resultd']="0";
+				}
+				else{
+						$query="INSERT INTO servicio SET 
+						codigoVacaRep='".$_POST['codVaca']."',
+						fechaCelo='".$_POST['fechCelo']."',
+						servido='".$_POST['servicio']."',
+						metodoRep='".$_POST['metodoRep']."',
+						numeroRegistroM='".$_POST['codigoTorP']."',
+						observacionesServ='".$_POST['observacionesRep']."',
+						idUsuario='".$_POST['idRespCelo']."';";
+						if ($resultado=mysqli_query($conn,$query))
+							{
+								mysqli_commit($conn);
+								$jTableResult['msj']="  DATO GUARDADO CORRECTAMENTE";
+								$jTableResult['resultd']="1";
+							}
+						else
+							{
+								mysqli_rollback($conn);
+								$jTableResult['msj']="  ERROR AL GUARDAR. INTENTE NUEVAMENTE.";
+								$jTableResult['resultd']="0";
+							}
+				}
             print json_encode($jTableResult);
         break;
+		case 'eliminarRegistroCelo':
+			$jTableResult = array();
+			$jTableResult['msj'] = "";
+			$jTableResult['resultd'] = "";
+		
+			//$idCeloRepA = mysqli_real_escape_string($conn, $_POST['idCeloRepA']);
+			$query = "DELETE FROM servicio WHERE idReproduccion = '".$_POST['idCeloRepA']."';";
+		
+			if (mysqli_query($conn, $query)) {
+				mysqli_commit($conn);
+				$jTableResult['msj'] = "DATO ELIMINADO CORRECTAMENTE";
+				$jTableResult['resultd'] = "1";
+			} else {
+				mysqli_rollback($conn);
+				$jTableResult['msj'] = "ERROR AL ELIMINAR. INTENTE NUEVAMENTE. " . mysqli_error($conn);
+				$jTableResult['resultd'] = "0";
+			}
+		
+			print json_encode($jTableResult);
+		break;
+		case 'eliminarRegistroPajilla':
+			$jTableResult = array();
+			$jTableResult['msj'] = "";
+			$jTableResult['resultd'] = "";
+		
+			//$idCeloRepA = mysqli_real_escape_string($conn, $_POST['idCeloRepA']);
+			$query = "DELETE FROM pajilla WHERE idPajilla = '".$_POST['datPajiId']."';";
+			if (mysqli_query($conn, $query)) {
+				mysqli_commit($conn);
+				$jTableResult['msj'] = "DATO ELIMINADO CORRECTAMENTE";
+				$jTableResult['resultd'] = "1";
+			} else {
+				mysqli_rollback($conn);
+				$jTableResult['msj'] = "ERROR AL ELIMINAR. INTENTE NUEVAMENTE. " . mysqli_error($conn);
+				$jTableResult['resultd'] = "0";
+			}
+		
+			print json_encode($jTableResult);
+		break;
 	}		
 mysqli_close($conn);
 ?>

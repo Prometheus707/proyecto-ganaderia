@@ -10,4 +10,4 @@ function Conectarse(){
 	if (!$conn) {die("Error de Conexion: ".mysqli_connect_error());	}
 	else		{  return $conn;									} 
 }
-?>
+?> 
