@@ -1,3 +1,18 @@
+	
+	
+	union de la rama 2.0 con la rama 2.1 :V	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	alert("cargando...!!!");
 	// $("#selectMetodos option[value=0]").attr("selected",true);
 	$("#DivMetodo").hide(); 

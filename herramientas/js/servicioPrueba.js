@@ -213,7 +213,7 @@ $(document).ready(function(){
 	});
 	$('#addPajilla').on('shown.bs.modal', function() {
 		actualizarCardPajilla();
-		alertify.success("entramos a pajillalalalalallalalala");
+		
 	});
 	$(document).on("change", "#razaListaPajilla",function () {
 		// alert($(this).val())
