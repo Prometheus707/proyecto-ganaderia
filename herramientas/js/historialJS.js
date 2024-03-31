@@ -21,6 +21,7 @@ $(document).ready(function(){
 			}, 'json');
 		}	
 	});
+	
 	$(document).on("click", "#divChekeo",function (){ $("#crearReproduccion").show();	});	
 	$(document).on("click", "#divVacunas",function (){		});	
 	$(document).on("click", "#divDesparacitar",function (){		});	
@@ -48,6 +49,8 @@ $(document).ready(function(){
 				$("#idAnimal").val(data.idAnimalHistorial);	//FORMULARIO	
 				$("#idAnimalFK").val(data.idAnimalFK);//FORMULARIO VACUNACION		
 				$("#idVacaForm").val(data.idAnimalCelo_fk);	
+				$("#idVacaFormUpdate").val(data.idAnimalCelo_fk);	
+
 				alert(data.idAnimalCelo_fk)
 
 			}, 'json');			

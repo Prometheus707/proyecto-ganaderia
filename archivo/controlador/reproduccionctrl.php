@@ -20,7 +20,7 @@
 			print json_encode($jTableResult);
 		break;
 	
-		case 'buscarCeloUpdate'://BUSCAR INFORMACION PARA LLENAR FORMULARIO A ACTUALIZAR
+		case 'buscarPajillaUpdate'://BUSCAR INFORMACION PARA LLENAR FORMULARIO A ACTUALIZAR
 			$jTableResult = array();
 				$jTableResult['numeroRegistroPa']="";
 				$jTableResult['nombreToroPa']="";
@@ -37,6 +37,53 @@
 					}		
 			print json_encode($jTableResult);
 		break;
+		case 'buscarCeloUpdate'://BUSCAR INFORMACION PARA LLENAR FORMULARIO A ACTUALIZAR
+			//echo "el id del celo es: ".$_POST['idcelUpdate'];
+			$jTableResult = array();
+				$idTipoCeloUpdate = $_POST['tipCeloUpdate'];
+				$jTableResult['fechaCeloUp']="";
+				$jTableResult['servidoUp']="";
+				$jTableResult['metodoRepUp']="";
+				$jTableResult['numeroRegistroMUpda']="";
+				$jTableResult['observacionesServUp']="";
+
+				if($idTipoCeloUpdate == 1 or $idTipoCeloUpdate == 2 ){
+					$jTableResult['fechaCeloUp']="";
+					$jTableResult['servidoUp']="";
+					$jTableResult['metodoRepUp']="";
+					$jTableResult['numeroRegistroMUpda']="";
+					$jTableResult['observacionesServUp']="";
+					$query = "SELECT idReproduccion, fechaCelo, servido, metodoRep, numeroRegistroM, observacionesServ FROM servicio WHERE idReproduccion ='".$_POST['idcelUpdate']."';";
+					$resultado = mysqli_query($conn, $query);
+					while($registro = mysqli_fetch_array($resultado))
+						{
+							$jTableResult['fechaCeloUp']=$registro['fechaCelo'];
+							$jTableResult['servidoUp']=$registro['servido'];
+							$jTableResult['metodoRepUp']=$registro['metodoRep'];
+							$jTableResult['numeroRegistroMUpda']=$registro['numeroRegistroM'];
+							$jTableResult['observacionesServUp']=$registro['observacionesServ'];
+						}	
+				}
+				else{
+						if($idTipoCeloUpdate == 3){
+							$jTableResult['servidoUp']="";
+							$jTableResult['observacionesServUp']="";
+							$jTableResult['fechaCeloUp']="";
+							$query = "SELECT idReproduccion, fechaCelo, servido, metodoRep, numeroRegistroM, observacionesServ FROM servicio WHERE idReproduccion ='".$_POST['idcelUpdate']."';";
+							$resultado = mysqli_query($conn, $query);
+							while($registro = mysqli_fetch_array($resultado))
+							{
+								$jTableResult['fechaCeloUp']=$registro['fechaCelo'];
+								$jTableResult['servidoUp']=$registro['servido'];
+								$jTableResult['observacionesServUp']=$registro['observacionesServ'];
+							}	
+						}
+					}
+			print json_encode($jTableResult);
+		break;
+
+
+
 		//arrelo lista de tarjetas que se muestran de con boton monta
 		case 'arregloMonta':
 				$jTableResult = array();
@@ -44,6 +91,7 @@
 					$query="SELECT servicio.idReproduccion,
 					servicio.codigoVacaRep,
 					animales.nombreAnimal as nombreAnimMonta,
+					animales.codAnimal AS codigoAnimMonta,
 					servicio.fechaCelo, 
 					servicio.servido,
 					servicio.metodoRep,
@@ -75,7 +123,9 @@
 													<h6 class='modal-title'>'".$registro['fechaCelo']."'</h6>
 												</div>
 												<div class='col-sm-5 d-flex justify-content-end align-items-center' >
-													<button class='btn' id='btnEliminarCardCel' data-idReproduccion='".$registro['idReproduccion']."'  data-tipo='1' style='background-color: red; color: #fff;'><i class='fa-solid fa-trash'></i></button>
+													<button class='btn' id='btnEliminarCardCel' data-idReproduccion='".$registro['idReproduccion']."'  data-tipo='1' style='background-color: red; color: #fff;  margin-right: 1rem;'><i class='fa-solid fa-trash'></i></button>     
+
+													<button class='btn' id='btnActualizarCardCelo' data-idReproduccionCeloUpdate='".$registro['idReproduccion']."'  data-toggle='modal' data-target='#mdreproduccionUpdate' data-tipo-update='1' style='background-color: red; color: #fff;'><i class='fa-solid fa-pen-to-square'></i></button>
 												</div>								
 											</div>
 											<div class='row'>
@@ -100,7 +150,7 @@
 													<h6 class='modal-title font-weight-bold'>Macho: </h6>
 												</div>												
 												<div class='col-sm-3' >
-													<h6 class='modal-title'>'".$registro['numeroRegistroM']."'</h6>
+													<h6 class='modal-title'>'".$registro['codigoAnimMonta']."'</h6>
 												</div>
 											</div>
 											<div class='row'>
@@ -134,6 +184,7 @@
 				$query="SELECT servicio.idReproduccion,
 				servicio.codigoVacaRep,
 				pajilla.nombrePajilla as nombreAnimPajilla,
+				pajilla.numeroRegistro as registroPajillaN,
 				servicio.fechaCelo, 
 				servicio.servido,
 				servicio.metodoRep,
@@ -164,8 +215,10 @@
 													<h6 class='modal-title'>'".$registro['fechaCelo']."'</h6>
 												</div>
 												<div class='col-sm-5 d-flex justify-content-end align-items-center' >
-													<button class='btn' id='btnEliminarCardCel' data-idReproduccion='".$registro['idReproduccion']."' data-tipo='2' style='background-color: red; color: #fff;'><i class='fa-solid fa-trash'></i></button>
-												</div>												
+													<button class='btn' id='btnEliminarCardCel' data-idReproduccion='".$registro['idReproduccion']."' data-tipo='2' style='background-color: red; color: #fff; margin-right: 1rem;'><i class='fa-solid fa-trash'></i></button>
+
+													<button class='btn' id='btnActualizarCardCelo' data-idReproduccionCeloUpdate='".$registro['idReproduccion']."'  data-tipo-update='2'  data-toggle='modal' data-target='#mdreproduccionUpdate' style='background-color: red; color: #fff;  '><i class='fa-solid fa-pen-to-square'></i></button>	
+												</div>										
 											</div>
 											<div class='row'>
 												<div class='col-sm-3' >
@@ -188,7 +241,7 @@
 													<h6 class='modal-title font-weight-bold'>Macho: </h6>
 												</div>												
 												<div class='col-sm-3' >
-													<h6 class='modal-title'>'".$registro['numeroRegistroM']."'</h6>
+													<h6 class='modal-title'>'".$registro['registroPajillaN']."'</h6>
 												</div>
 											</div>
 											<div class='row'>
@@ -246,7 +299,9 @@
 													<h6 class='modal-title'>'".$registro['fechaCelo']."'</h6>
 												</div>
 												<div class='col-sm-5 d-flex justify-content-end align-items-center' >
-													<button class='btn' id='btnEliminarCardCel' data-idReproduccion='".$registro['idReproduccion']."' data-tipo='3' style='background-color: red; color: #fff;'><i class='fa-solid fa-trash'></i></button>
+													<button class='btn' id='btnEliminarCardCel' data-idReproduccion='".$registro['idReproduccion']."' data-tipo='3' style='background-color: red; color: #fff;  margin-right: 1rem;'><i class='fa-solid fa-trash'></i></button>
+
+													<button class='btn' id='btnActualizarCardCelo' data-idReproduccionCeloUpdate='".$registro['idReproduccion']."' data-tipo-update='3'  data-toggle='modal' data-target='#mdreproduccionUpdate' style='background-color: red; color: #fff; '><i class='fa-solid fa-pen-to-square'></i></button>
 												</div>													
 											</div>
 											<div class='row'>
@@ -612,6 +667,72 @@
 				}
 			print json_encode($jTableResult);
         break;
+		case 'actualizarCheck':
+            $jTableResult = array();
+            $jTableResult['msj']="";
+            $jTableResult['resultd']="";
+				if (($_POST['servicioUpNo']=="") or ($_POST['observacionesRepUpNo']=="")){
+					$jTableResult['msj']="TIENES CAMPOS OBLIGATORIOS POR LLENAR";
+					$jTableResult['resultd']="0";
+				}
+				else{
+					$query="UPDATE servicio SET
+					codigoVacaRep='".$_POST['codVacaUpNo']."',
+					fechaCelo='".$_POST['fechCeloUpNo']."',
+					servido='".$_POST['servicioUpNo']."',
+					observacionesServ='".$_POST['observacionesRepUpNo']."',
+					metodoRep = '0',
+					numeroRegistroM= '0',
+					idUsuario='".$_POST['idRespCeloUpNo']."'
+					where idReproduccion='".$_POST['idCeloFormUpdate']."';";
+					if ($resultado=mysqli_query($conn,$query))
+						{
+							mysqli_commit($conn);
+							$jTableResult['msj']="  DATO ACTUALIZADO CORRECTAMENTE";
+							$jTableResult['resultd']="1";
+						}
+					else
+						{
+							mysqli_rollback($conn);
+							$jTableResult['msj']="  ERROR AL ACTUALIZAR. INTENTE NUEVAMENTE.";
+							$jTableResult['resultd']="0";
+						}
+				}
+			print json_encode($jTableResult);
+        break;
+		case 'actualizarCheckCompleto':
+            $jTableResult = array();
+            $jTableResult['msj']="";
+            $jTableResult['resultd']="";
+				if(($_POST['servicioUpdate']=="") or ($_POST['metodoRepUpdate'] =="") or ($_POST['codigoTorPUpdate'] ==0)){
+					$jTableResult['msj']="TIENES CAMPOS OBLIGATORIOS POR LLENAR";
+					$jTableResult['resultd']="0";
+				}
+				else{
+						$query="UPDATE servicio SET 
+						codigoVacaRep='".$_POST['codVacaUpdate']."',
+						fechaCelo='".$_POST['fechCeloUpdate']."',
+						servido='".$_POST['servicioUpdate']."',
+						metodoRep='".$_POST['metodoRepUpdate']."',
+						numeroRegistroM='".$_POST['codigoTorPUpdate']."',
+						observacionesServ='".$_POST['observacionesRepUpdate']."',
+						idUsuario='".$_POST['idRespCeloUpdate']."'
+						where idReproduccion='".$_POST['idCeloFormUpdateUp']."';"; 
+						if ($resultado=mysqli_query($conn,$query))
+							{
+								mysqli_commit($conn);
+								$jTableResult['msj']="  DATO ACTUALIZADO CORRECTAMENTE";
+								$jTableResult['resultd']="1";
+							}
+						else
+							{
+								mysqli_rollback($conn);
+								$jTableResult['msj']="  ERROR AL ACTUALIZAR. INTENTE NUEVAMENTE.";
+								$jTableResult['resultd']="0";
+							}
+				}
+            print json_encode($jTableResult);
+        break;
 		case 'guardarCheckCompleto':
             $jTableResult = array();
             $jTableResult['msj']="";
@@ -644,6 +765,7 @@
 				}
             print json_encode($jTableResult);
         break;
+		
 		case 'eliminarRegistroCelo':
 			$jTableResult = array();
 			$jTableResult['msj'] = "";

@@ -1,29 +1,225 @@
 $(document).ready(function(){
+
+	/////////////////////////*ACTUALIZACION DE CELOS*////////////////////////
+		
+	 //MIRAR QUE METODO ESCOGIO MONTA/INSEMINACION
+	$("#fechaCeloVacaUpdate").datepicker();
+	$(document).on("change", "#selectServidoUpdate",function (){  //YO NO TOQUE NADA
+		var varservido = $(this).val();
+		if(varservido==1){ 
+			$("#DivMetodoUpdate").show('slow');
+			$("#selectMetodosUpdate").show('slow'); 
+			$("#nombreToroUpdate").show("slow");
+			$("#razaToroUpdate").show("slow");
+		}else{ 
+			$("#DivMetodoUpdate").hide(500);
+			$("#selectMetodosUpdate").hide(500); 
+			$("#infoToroUpdate").hide(500);
+			$("#datosRepTituloUpdate").hide(500);
+			$("#nombreToroUpdate").hide(500);
+			$("#razaToroUpdate").hide(500);
+			$("#divBtnPajillaUpdate").hide(500);
+			$("#observacionesRepUpdate").show("slow");
+			$("#codigoRegistroTUpdate").find('option').remove().end();
+			$("#codigoRegistroTUpdate").val()==""; 
+			$("#codigoRegistroTUpdate").val("");
+			$("#nomToroUpdate").val("");
+			$("#razToroUpdate").val("");
+			$("#idRazaServUpdate").val("");
+			$("#idToroServUpdate").val(""); 
+			$("#selectMetodosUpdate option:eq(0)").prop("selected", true);
+		}
+	});
+	$(document).on("change", "#selectMetodosUpdate",function () {
+		opcionCelInsm = $('#selectMetodosUpdate').val()
+		if (opcionCelInsm == 1){
+			$('#divBtnPajillaUpdate').hide(500);
+			$('#infoToroUpdate').show('slow');
+			$('#datosRepTituloUpdate').show('slow');
+			$("#divTlRepUpdate").show('slow');
+		}
+		else{
+			if(opcionCelInsm == 2){
+				$('#divBtnPajillaUpdate').show('slow');
+				$('#btnPajilaUpdate').show('slow');
+				$('#infoToroUpdate').show('slow');
+				$('#datosRepTituloUpdate').show('slow');
+				$("#divTlRepUpdate").show('slow');
+			}
+			else{
+				if(opcionCelInsm == 0){
+					$('#infoToroUpdate').hide(500);
+					$('#datosRepTituloUpdate').hide(500);
+					$('#divBtnPajillaUpdate').hide(500);
+				}
+			}
+		}
+	});
+
+	$(document).on("change", "#selectMetodosUpdate",function (){ //YO NO TOQUE NADA
+		var metodosRep = $(this).val();
+		// alert(metodosRep);
+		$.post("../controlador/reproduccionctrl.php", {
+		action:'listarTipo',
+		tipoEnsiminacion: metodosRep 
+			}, function(data){
+			$("#codigoRegistroTUpdate").html(data.tipo);		
+			}, 'json');
+		if ( metodosRep == 1 || metodosRep == 2 || metodosRep == 0 ){
+			$("#nomToroUpdate").val("");
+			$("#razToroUpdate").val("");
+			$("#idRazaServUpdate").val("");
+			$("#idToroServUpdate").val("");
+		}       
+	}); 
+	$('#codigoRegistroTUpdate').on('change', function() {
+		var estado = $('#selectMetodosUpdate').val();
+		// alert('esatado = '+estado); 
+		if(estado == 1){
+			cargarSelectMontaUpdate();
+		}
+		else{
+			cargarSelectPajillaUpdate();
+		}
+	});
+	function cargarSelectMontaUpdate(){
+		//alert("llenar con monta");
+		$.post("../controlador/reproduccionctrl.php", {
+		action:'cargarServicio',
+		idanimals:$("#codigoRegistroTUpdate").val()
+		}, function(data){
+			$("#nomToroUpdate").val(data.nombreAnimal);	
+			$("#idToroServUpdate").val(data.idAnimal);	  
+			$("#razToroUpdate").val(data.nombreRaza);	
+			$("#idRazaServUpdate").val(data.idRaza_FK);	
+		}, 'json'); 
+    }
+	function cargarSelectPajillaUpdate(){
+		//alert("llenar con inseminacion");
+		$.post("../controlador/reproduccionctrl.php", {
+		action:'cargarServicioPjailla',
+		numReg:$("#codigoRegistroTUpdate").val()
+		}, function(data){
+			$("#nomToroUpdate").val(data.nombrePajilla);	
+			$("#idToroServUpdate").val(data.idPajilla);	  
+			$("#razToroUpdate").val(data.nombreRazaP);	
+			$("#idRazaServUpdate").val(data.numrazaPajilla);	
+		}, 'json');
+	}
+	$(document).on("click", "#btnActualizarCardCelo",function () {
+		const tipCeloUpdate = $(this).attr("data-tipo-update")
+		const idcelUpdate = $(this).attr('data-idReproduccionCeloUpdate')
+		$("#idCeloFormUpdate").val(tipCeloUpdate);
+		$("#idCeloBdUpdate").val(idcelUpdate);
+		//alertify.success("el celo que se esocgio es: "+ tipCeloUpdate)
+		//alertify.success("el id del celo a actualizar es: " + idcelUpdate);
+		$.post("../controlador/reproduccionCtrl.php", {
+			action:'buscarCeloUpdate',
+			idcelUpdate : idcelUpdate,
+			tipCeloUpdate:tipCeloUpdate
+			}, function(data){
+				console.log(data);
+				alertify.success("el val del numeroR:" + data.numeroRegistroMUpda)
+
+				if (tipCeloUpdate == 1 || tipCeloUpdate == 2){
+
+					$("#fechaCeloVacaUpdate").val(data.fechaCeloUp).trigger('change');
+					$("#selectServidoUpdate").val(data.servidoUp).trigger('change');
+					$("#selectMetodosUpdate").val(data.metodoRepUp).trigger('change');
+					
+					setTimeout(function() {
+						$("#codigoRegistroTUpdate").val(data.numeroRegistroMUpda).trigger('change');
+					}, 100);
+
+					$("#observacionesRepUpdate").val(data.observacionesServUp);
+				}
+				else{
+					$("#fechaCeloVacaUpdate").val(data.fechaCeloUp).trigger('change');
+					$("#selectServidoUpdate").val(data.servidoUp).trigger('change');
+					$("#observacionesRepUpdate").val(data.observacionesServUp).trigger('change');
+				}
+					
+			}, 'json');
+	});
+
+	$(document).on("click",'#btnUpdateCelo', function(){
+		
+		if($("#selectServidoUpdate").val()=="0"){ alertify.error("Debe seleccionar si esta servido o no");	}
+		if($("#selectServidoUpdate").val()=="1")
+		{
+			idCeloFormUpdateUp = $("#idCeloBdUpdate").val();
+			alertify.success("si esta servidddppdpdpdpd con codigo de celo: " + idCeloFormUpdateUp);
+			$.post("../controlador/reproduccionctrl.php", {
+			action:'actualizarCheckCompleto',									
+			codVacaUpdate:$("#idVacaFormUpdate").val(),
+			//nombeVaca:$("#nombreVacaR").val(),
+			//razaVaca:$("#idRazaV").val(),
+			fechCeloUpdate:$("#fechaCeloVacaUpdate").val(),
+			servicioUpdate:$("#selectServidoUpdate").val(),
+			metodoRepUpdate:$("#selectMetodosUpdate").val(),
+			codigoTorPUpdate:$("#codigoRegistroTUpdate").val(),
+			//nombreTorP:$("#nomToro").val(),
+			//razaTorP:$("#idRazaServ").val(),
+			//ResponsableRep:$("#idresponsableRep").val(),
+			idCeloFormUpdateUp: idCeloFormUpdateUp,
+			observacionesRepUpdate:$("#observacionesRepUpdate").val(),
+			idRespCeloUpdate:$("#idUsuRegistroCelUpdate").val()
+			}, function(data){
+			if(data.resultd=="1"){   
+				alertify.success(data.msj);
+					setTimeout(function(){
+						$("#btnCerrarUpdateCerlo").trigger("click");
+					},300);
+				//listarServicioT();
+				}else{	
+					alertify.error(data.msj);	
+				}
+			}, 'json'); 
+		}
+		if($("#selectServidoUpdate").val()=="2"){  
+		
+			idCeloFormUpdate = $("#idCeloBdUpdate").val();
+			alertify.success("no esta servidddppdpdpdpd");  
+			alertify.success("el id del celo de no servido es: "+idCeloFormUpdate)    
+			$("#selectMetodosUpdate option[value=0]").attr("selected",true);
+			$.post("../controlador/reproduccionctrl.php", {
+				action:'actualizarCheck',
+				// se envia al controlador
+				codVacaUpNo:$("#idVacaFormUpdate").val(),
+				//nombeVaca:$("#nombreVacaR").val(),
+				//razaVaca:$("#idRazaV").val(),
+				idCeloFormUpdate:idCeloFormUpdate,
+				fechCeloUpNo:$("#fechaCeloVacaUpdate").val(),
+				servicioUpNo:$("#selectServidoUpdate").val(),
+				//ResponsableRep:$("#idresponsableRep").val(),
+				observacionesRepUpNo:$("#observacionesRepUpdate").val(),
+				idRespCeloUpNo:$("#idUsuRegistroCelUpdate").val()
+				
+			}, function(data){                      
+				if(data.resultd=="1"){  
+					alertify.success(data.msj);
+					setTimeout(function(){
+						$("#btnCerrarUpdateCerlo").trigger("click");
+					},300);
+					//listarServicioT();
+				}else{	
+					alertify.error(data.msj);	
+				}
+			}, 'json'); 				
+		}
+	});
+/////////////////////////////*ACTUALIZACION DE CELOS FIN*///////////////////
+
+
+
+
+
+////////////////////////////*REGISTRO DE CELOS*//////////////////////////////
 	$("#selectMetodos option[value=0]").attr("selected",true);
 	$("#DivMetodo").hide(500); 
 	$("#selectMetodos").hide(500); 
 	$("#infoToro").hide(500); 
 	$("#divBtnPajilla").hide(500); 
-	/*  inicio recibe el codigo del anibal seleccionado  */
-	$(document).on("click", "#btnListarCelo", function (){
-		var idAnimal = $("#idVacaForm").val();	
-		alertify.success(idAnimal);
-		$.post("../controlador/reproduccionctrl.php", {
-			action:'listarCelosA',
-			idAnimal:idAnimal
-			}, function(data){
-				alertify.error("data llegoooooooo: ",data);
-				if(data.result==1){ 
-					$("#listadoDelCelo").html(data.listarCeloAnimales);
-					alertify.error(data.nombreAnimalHembraCelo)
-					$("#nombreHembraC").text(data.nombreAnimalHembraCelo);
-				}
-				else { 
-					alertify.error(data.msj); 
-				}		
-			}, 'json');
-	});	
-
 	function actualizarListaMonta (){
 		var idAnimalListCelo = $("#idVacaForm").val();	
 		$.post("../controlador/reproduccionctrl.php", {
@@ -228,57 +424,32 @@ $(document).ready(function(){
 		alertify.success(idRz);
 		$("#idRazaPA").val(idRz);
 		
-		$.post("../controlador/reproduccionctrl.php", {
-			action: 'eliminarRegistroCelo',
-			idCeloRepA: idCeloRepA
-		}, function(data) {
-			if (data.resultd == "1") {
-				alertify.success(data.msj);
-				actualizarListaMonta();
-				totalCelosF();
-			} else {
-				alertify.error(data.msj);
-			}
-		}, 'json');
 	});
 	$(document).on("click", "#btnPajila",function () {
-			$.post("../controlador/reproduccionCtrl.php", {
+		llenarRazPajilla("#razaListaPajilla");
+	});
+	function llenarRazPajilla(idLlenaRaza){
+		$.post("../controlador/reproduccionCtrl.php", {
 			action:'buscarRazas',
 			}, function(data){
-					$("#razaListaPajilla").html(data.listaRaza);
-					$("#idRazaP").val(data.idRaza);
+					$(idLlenaRaza).html(data.listaRaza);
 			}, 'json');
-	});
+	}
 	$(document).on("click", "#btnActualizarCardPajilla",function () {
-		//alert("actualizarrrr");
-		$.post("../controlador/reproduccionCtrl.php", {
-		action:'buscarRazas',
-		}, function(data){
-				$("#razaListaPajillaA").html(data.listaRaza);
-		}, 'json');
-
-
-		
-		// $.post("../controlador/reproduccionCtrl.php", {
-		// 	action:'buscarRazas',
-		// 	}, function(data){
-		// 			$("#razaListaPajillaA").html(data.listaRaza);
-		// 	}, 'json');
-	});
-
-	$(document).on("click", "#btnActualizarCardPajilla",function () {
+			llenarRazPajilla("#razaListaPajillaA");
 			const idPajiUpdate = $(this).attr('data-pajillaIdUpdate')
-			
-
 			$.post("../controlador/reproduccionCtrl.php", {
-				action:'buscarCeloUpdate',
+				action:'buscarPajillaUpdate',
 				idPajiUpdate:idPajiUpdate
 				}, function(data){
+						
 						$("#idPaUpdate").val(data.idPajlaUp);
 						$("#numeroRegistroRA").val(data.numeroRegistroPa);
 						$("#nombreToroRA").val(data.nombreToroPa);
 						$("#razaListaPajillaA").val(data.razaListaPajillaAid);
-						$("#idRazaPA").val(data.razaListaPajillaAid);
+						setTimeout(function() {
+							$("#idRazaPA").val(data.razaListaPajillaAid).trigger('change');//id pone el id , pero no se pone en el select aveces
+						},300);
 				}, 'json');
 	});
 	
@@ -570,4 +741,5 @@ $(document).ready(function(){
 			}, 'json'); 				
 		}
 	});
+	
 });
