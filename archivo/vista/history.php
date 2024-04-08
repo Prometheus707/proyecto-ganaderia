@@ -143,7 +143,7 @@ $fechaReg = date("Y-m-d h:m");
 							</div>
 							<div class="col-12 col-sm-6 col-md-3">
 								<div class="info-box">
-									<span id="divChekeo" data-toggle="modal" data-target="#mdreproduccion" style="cursor:pointer" class="info-box-icon bg-info elevation-1">
+									<span id="divChekeo" data-toggle="modal" data-target="#mdreproduccion" style="cursor:pointer"  class="info-box-icon bg-info elevation-1">
 										<i class="fa fa-hand-paper-o" aria-hidden="true"></i>
 									</span>
 									<div  class="info-box-content">

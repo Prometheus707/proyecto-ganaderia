@@ -1,5 +1,5 @@
 	<!-----------------------------------------REGISTRO POSIBLES CELOS------------------------------------------->
-	<div class="modal fade" id="mdreproduccion" tabindex="-1" role="dialog" aria-labelledby="exampleModalabel" data-backdrop="static" data-keyboard="false"aria-hidden="true">
+	<div class="modal fade" id="mdreproduccion" tabindex="-1" role="dialog" aria-labelledby="exampleModalabel" data-backdrop="static" data-backdrop="false" data-keyboard="false"aria-hidden="true">
 		<div class="modal-dialog modal-dialog-scrollable">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -120,7 +120,7 @@
 		</div>	
 	</div>
 	<!-----------------------------------------ACTUALIZAR CELOS------------------------------------------->
-	<div class="modal fade" id="mdreproduccionUpdate" tabindex="-1" role="dialog" aria-labelledby="exampleModalabel" data-backdrop="static" data-keyboard="false"aria-hidden="true">
+	<div class="modal fade " id="mdreproduccionUpdate" tabindex="-1" role="dialog" aria-labelledby="exampleModalabel" data-backdrop="static" data-keyboard="false" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-scrollable">
 			<div class="modal-content">
 				<div class="modal-header">

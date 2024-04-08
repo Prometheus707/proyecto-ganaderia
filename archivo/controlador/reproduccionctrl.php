@@ -125,7 +125,7 @@
 												<div class='col-sm-5 d-flex justify-content-end align-items-center' >
 													<button class='btn' id='btnEliminarCardCel' data-idReproduccion='".$registro['idReproduccion']."'  data-tipo='1' style='background-color: red; color: #fff;  margin-right: 1rem;'><i class='fa-solid fa-trash'></i></button>     
 
-													<button class='btn' id='btnActualizarCardCelo' data-idReproduccionCeloUpdate='".$registro['idReproduccion']."'  data-toggle='modal' data-target='#mdreproduccionUpdate' data-tipo-update='1' style='background-color: red; color: #fff;'><i class='fa-solid fa-pen-to-square'></i></button>
+													<button class='btn' id='btnActualizarCardCelo' data-idReproduccionCeloUpdate='".$registro['idReproduccion']."'  data-toggle='modal' data-target='#mdreproduccionUpdate' data-backdrop='false' data-tipo-update='1' style='background-color: red; color: #fff;'><i class='fa-solid fa-pen-to-square'></i></button>
 												</div>								
 											</div>
 											<div class='row'>
@@ -217,7 +217,7 @@
 												<div class='col-sm-5 d-flex justify-content-end align-items-center' >
 													<button class='btn' id='btnEliminarCardCel' data-idReproduccion='".$registro['idReproduccion']."' data-tipo='2' style='background-color: red; color: #fff; margin-right: 1rem;'><i class='fa-solid fa-trash'></i></button>
 
-													<button class='btn' id='btnActualizarCardCelo' data-idReproduccionCeloUpdate='".$registro['idReproduccion']."'  data-tipo-update='2'  data-toggle='modal' data-target='#mdreproduccionUpdate' style='background-color: red; color: #fff;  '><i class='fa-solid fa-pen-to-square'></i></button>	
+													<button class='btn' id='btnActualizarCardCelo' data-idReproduccionCeloUpdate='".$registro['idReproduccion']."'  data-tipo-update='2'  data-toggle='modal' data-target='#mdreproduccionUpdate' data-backdrop='false' style='background-color: red; color: #fff;  '><i class='fa-solid fa-pen-to-square'></i></button>	
 												</div>										
 											</div>
 											<div class='row'>
@@ -359,7 +359,7 @@
 												<div class='col-sm-5 d-flex justify-content-end align-items-center' >
 													<button class='btn' id='btnEliminarCardPajilla' data-pajillaId = '".$registro['idPajilla']."' style='background-color: red; color: #fff; margin-right: 1rem;' ><i class='fa-solid fa-trash'></i></button>
 
-													<button class='btn' id='btnActualizarCardPajilla' data-pajillaIdUpdate = '".$registro['idPajilla']."' style='background-color: red; color: #fff;'  data-toggle='modal' data-target='#actualizarPajilla' ><i class='fa-solid fa-pen-to-square'></i></button>
+													<button class='btn' id='btnActualizarCardPajilla' data-pajillaIdUpdate = '".$registro['idPajilla']."' style='background-color: red; color: #fff;'  data-toggle='modal' data-backdrop='false' data-target='#actualizarPajilla' ><i class='fa-solid fa-pen-to-square'></i></button>
 												</div>													
 											</div>
 											<div class='row'>

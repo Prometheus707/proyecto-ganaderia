@@ -1,4 +1,4 @@
-$(document).ready(function(){
+$(function(){
 
 	/////////////////////////*ACTUALIZACION DE CELOS*////////////////////////
 		
@@ -20,9 +20,9 @@ $(document).ready(function(){
 			$("#razaToroUpdate").hide(500);
 			$("#divBtnPajillaUpdate").hide(500);
 			$("#observacionesRepUpdate").show("slow");
-			$("#codigoRegistroTUpdate").find('option').remove().end();
-			$("#codigoRegistroTUpdate").val()==""; 
-			$("#codigoRegistroTUpdate").val("");
+			//$("#codigoRegistroTUpdate").find('option').remove().end();
+			// $("#codigoRegistroTUpdate").val()==""; 
+			// $("#codigoRegistroTUpdate").val("");
 			$("#nomToroUpdate").val("");
 			$("#razToroUpdate").val("");
 			$("#idRazaServUpdate").val("");
@@ -56,23 +56,9 @@ $(document).ready(function(){
 		}
 	});
 
-	$(document).on("change", "#selectMetodosUpdate",function (){ //YO NO TOQUE NADA
-		var metodosRep = $(this).val();
-		// alert(metodosRep);
-		$.post("../controlador/reproduccionctrl.php", {
-		action:'listarTipo',
-		tipoEnsiminacion: metodosRep 
-			}, function(data){
-			$("#codigoRegistroTUpdate").html(data.tipo);		
-			}, 'json');
-		if ( metodosRep == 1 || metodosRep == 2 || metodosRep == 0 ){
-			$("#nomToroUpdate").val("");
-			$("#razToroUpdate").val("");
-			$("#idRazaServUpdate").val("");
-			$("#idToroServUpdate").val("");
-		}       
-	}); 
-	$('#codigoRegistroTUpdate').on('change', function() {
+	
+	//$('#codigoRegistroTUpdate').on('change', function() {
+	$(document).on("change", "#codigoRegistroTUpdate",function () {
 		var estado = $('#selectMetodosUpdate').val();
 		// alert('esatado = '+estado); 
 		if(estado == 1){
@@ -106,6 +92,7 @@ $(document).ready(function(){
 			$("#idRazaServUpdate").val(data.numrazaPajilla);	
 		}, 'json');
 	}
+	
 	$(document).on("click", "#btnActualizarCardCelo",function () {
 		const tipCeloUpdate = $(this).attr("data-tipo-update")
 		const idcelUpdate = $(this).attr('data-idReproduccionCeloUpdate')
@@ -122,26 +109,62 @@ $(document).ready(function(){
 				alertify.success("el val del numeroR:" + data.numeroRegistroMUpda)
 
 				if (tipCeloUpdate == 1 || tipCeloUpdate == 2){
-
-					$("#fechaCeloVacaUpdate").val(data.fechaCeloUp).trigger('change');
+					$("#fechaCeloVacaUpdate").val(data.fechaCeloUp);
 					$("#selectServidoUpdate").val(data.servidoUp).trigger('change');
 					$("#selectMetodosUpdate").val(data.metodoRepUp).trigger('change');
-					
-					setTimeout(function() {
+					$("#codigoRegistroTUpdate").val(data.numeroRegistroMUpda).trigger('change');
+					setTimeout(function(){
 						$("#codigoRegistroTUpdate").val(data.numeroRegistroMUpda).trigger('change');
-					}, 100);
-
+					},300);
 					$("#observacionesRepUpdate").val(data.observacionesServUp);
 				}
 				else{
-					$("#fechaCeloVacaUpdate").val(data.fechaCeloUp).trigger('change');
+					$("#fechaCeloVacaUpdate").val(data.fechaCeloUp);
 					$("#selectServidoUpdate").val(data.servidoUp).trigger('change');
-					$("#observacionesRepUpdate").val(data.observacionesServUp).trigger('change');
+					$("#observacionesRepUpdate").val(data.observacionesServUp);
 				}
-					
 			}, 'json');
 	});
-
+	$(document).on("change", "#selectMetodosUpdate",function (){ //YO NO TOQUE NADA
+		var metodosRep = $(this).val();
+		// alert(metodosRep);
+		$.post("../controlador/reproduccionctrl.php", {
+		action:'listarTipo',
+		tipoEnsiminacion: metodosRep 
+			}, function(data){
+			$("#codigoRegistroTUpdate").html(data.tipo);		
+			}, 'json');
+		if (metodosRep == 0 || metodosRep == 1 || metodosRep == 2){
+			$("#nomToroUpdate").val("");
+			$("#razToroUpdate").val("");
+			$("#idRazaServUpdate").val("");
+			$("#idToroServUpdate").val("");
+		}       
+	}); 
+	// $(document).on("click", "#btnActualizarCardCelo",function () {
+	// 	const tipCeloUpdate = $(this).attr("data-tipo-update")
+	// 	const idcelUpdate = $(this).attr('data-idReproduccionCeloUpdate')
+	// 	$("#idCeloFormUpdate").val(tipCeloUpdate);
+	// 	$("#idCeloBdUpdate").val(idcelUpdate);
+	// 	//alertify.success("el celo que se esocgio es: "+ tipCeloUpdate)
+	// 	//alertify.success("el id del celo a actualizar es: " + idcelUpdate);
+	// 	$.post("../controlador/reproduccionCtrl.php", {
+	// 		action:'buscarCeloUpdate',
+	// 		idcelUpdate : idcelUpdate,
+	// 		tipCeloUpdate:tipCeloUpdate
+	// 		}, function(data){
+	// 			console.log(data);
+	// 			alertify.success("el val del numeroR:" + data.numeroRegistroMUpda)
+	// 				$("#fechaCeloVacaUpdate").val(data.fechaCeloUp);
+	// 				$("#selectServidoUpdate").val(data.servidoUp).trigger('change');
+	// 				$("#selectMetodosUpdate").val(data.metodoRepUp).trigger('change');
+	// 				$("#codigoRegistroTUpdate").val(data.numeroRegistroMUpda).trigger('change');
+	// 				$("#observacionesRepUpdate").val(data.observacionesServUp);
+	// 				$("#fechaCeloVacaUpdate").val(data.fechaCeloUp).trigger('change');
+	// 				$("#selectServidoUpdate").val(data.servidoUp).trigger('change');
+	// 		}, 'json');
+	// });
+	
 	$(document).on("click",'#btnUpdateCelo', function(){
 		
 		if($("#selectServidoUpdate").val()=="0"){ alertify.error("Debe seleccionar si esta servido o no");	}
@@ -169,6 +192,7 @@ $(document).ready(function(){
 				alertify.success(data.msj);
 					setTimeout(function(){
 						$("#btnCerrarUpdateCerlo").trigger("click");
+						
 					},300);
 				//listarServicioT();
 				}else{	
@@ -200,6 +224,7 @@ $(document).ready(function(){
 					alertify.success(data.msj);
 					setTimeout(function(){
 						$("#btnCerrarUpdateCerlo").trigger("click");
+						
 					},300);
 					//listarServicioT();
 				}else{	
@@ -283,6 +308,7 @@ $(document).ready(function(){
 					$('#listarInseminacion').show('slow');
 					$('#listarCelosNo').show('slow');
 					$('#Title_celos').show('slow');
+					$("#listCel").empty();
 				}
 				else{
 					$('#listarMonta').hide(500);
@@ -442,7 +468,7 @@ $(document).ready(function(){
 				action:'buscarPajillaUpdate',
 				idPajiUpdate:idPajiUpdate
 				}, function(data){
-						
+						$("#idRazaPA").val(data.razaListaPajillaAid).trigger('change');
 						$("#idPaUpdate").val(data.idPajlaUp);
 						$("#numeroRegistroRA").val(data.numeroRegistroPa);
 						$("#nombreToroRA").val(data.nombreToroPa);
@@ -450,6 +476,9 @@ $(document).ready(function(){
 						setTimeout(function() {
 							$("#idRazaPA").val(data.razaListaPajillaAid).trigger('change');//id pone el id , pero no se pone en el select aveces
 						},300);
+						setTimeout(function() {
+							$("#razaListaPajillaA").val(data.razaListaPajillaAid);//id pone el id , pero no se pone en el select aveces
+						},400);
 				}, 'json');
 	});
 	
@@ -538,7 +567,8 @@ $(document).ready(function(){
 			$("#idToroServ").val("");
 		}       
 	}); 
-	$('#selectMetodos').on('change', function() {
+	//$('#selectMetodos').on('change', function() {
+	$(document).on("change", "#selectMetodos",function (){
 		opcionCelInsm = $('#selectMetodos').val()
 		if (opcionCelInsm == 1){
 			$('#divBtnPajilla').hide(500);
@@ -564,7 +594,9 @@ $(document).ready(function(){
 		}
 	});
 	 //MIRAR QUE METODO ESCOGIO MONTA/INSEMINACION
-	$('#codigoRegistroT').on('change', function() {
+	//$('#codigoRegistroT').on('change', function() {
+	$(document).on("change", "#codigoRegistroT",function (){
+		
 		var estado = $('#selectMetodos').val();
 		// alert('esatado = '+estado); 
 		if(estado == 1){
@@ -633,7 +665,7 @@ $(document).ready(function(){
 						alertify.error(data.msj);		
 					}
 			}, 'json');                  
-	});
+	});	
 	////////////////////////////GUARDAR CELO SERVICIOS////////////////////////
 	$(document).on("click", "#btnActualizarPajilla",function (){
 		var datPajiIdU = $("#idPaUpdate").val(); //INGRESA A LOS ATRIBUTOS DEL BOTON
@@ -663,9 +695,11 @@ $(document).ready(function(){
 						alertify.error(data.msj);		
 					}
 			}, 'json');
-	});
+	}); 
+
 	// $('#btnGP').on('click', function() {  alert("hola"); });
-	$('#btnguardarCelo').on('click', function() { 
+	//$('#btnguardarCelo').on('click', function() { 
+	$(document).on("click", "#btnguardarCelo",function (){
 		if($("#selectServido").val()=="0"){ alertify.error("Debe seleccionar si esta servido o no");	}
 		if($("#selectServido").val()=="1")
 		{
@@ -688,10 +722,11 @@ $(document).ready(function(){
 				$("#nombreVacaR").val("");
 				$("#razaVacaR").val("");//LIMPIAR CAJA DE TEXTO CUANDO SE GUARDE
 				$("#idRazaV").val("");
-				$("#fechaCeloVaca").val("");
-				$("#selectServido").val("");
-				$("#selectMetodos").val("");
-				$("#codigoRegistroT").val("");
+				$("#selectServido option[value=0]").prop("selected",true);
+				$("#selectMetodos option[value=0]").prop("selected",true);
+				//$("#codigoRegistroT").val("");
+				// Establecer la opción con valor 0 como seleccionada por defecto
+				$("#codigoRegistroT option[value=0]").prop("selected", true);
 				$("#idToroServ").val("");                           
 				$("#nomToro").val("");
 				$("#razToro").val("");
@@ -700,10 +735,19 @@ $(document).ready(function(){
 				$("#idresponsableRep").val("");
 				$("#observacionesRep").val("");
 				alertify.success(data.msj);
+				totalCelosF();
 					setTimeout(function(){
-						$("#btncerrarReproduccion").trigger("click");
-						location.reload();
-					},300);
+						//$("#btncerrarReproduccion").trigger("click");
+						// $("#mdreproduccion").modal('hide');
+						// if ($('.modal-backdrop').is(':visible')) {
+						// 	$('body').removeClass('modal-open'); 
+						// 	$('.modal-backdrop').remove(); 
+						// 	};
+
+						// Cerrar el modal
+					
+						//$('.modal-backdrop').remove();
+						},300);
 				//listarServicioT();
 				}else{	alertify.error(data.msj);	}
 			}, 'json'); 
@@ -722,21 +766,20 @@ $(document).ready(function(){
 			idRespCelo:$("#idUsuRegistroCel").val()
 			}, function(data){                      
 				if(data.resultd=="1"){  
+					$("#selectServido option[value=0]").prop("selected",true);
 					$("#nombreVacaR").val(""),
 					$("#idAnimal").val(""),
 					$("#razaVacaR").val(""),//LIMPIAR CAJA DE TEXTO CUANDO SE GUARDE
 					$("#idRazaV").val(""),
-					$("#fechaCeloVaca").val(""),
-					$("#selectServido").val(""),
 					$("#responsableRep").val(""),
 					$("#idresponsableRep").val(""),
 					$("#observacionesRep").val("");
 					alertify.success(data.msj);
+					totalCelosF();
 					setTimeout(function(){
-					$("#btncerrarReproduccion").trigger("click");
-					location.reload();
+						//$('.modal-backdrop').remove();
 					},300);
-					listarServicioT();
+					//listarServicioT();
 				}else{	alertify.error(data.msj);	}
 			}, 'json'); 				
 		}
