@@ -2,10 +2,10 @@ $(function(){
 
 	/////////////////////////*ACTUALIZACION DE CELOS*////////////////////////
 	 //MIRAR QUE METODO ESCOGIO MONTA/INSEMINACION
-	// $("#fechaCeloVacaUpdate").datepicker({
-	// 	dateFormat: "yy-mm-dd"	
-	// });
-	flatpickr('#fechaCeloVacaUpdate', {});
+	$("#fechaCeloVacaUpdate").datepicker({
+	 	dateFormat: "yy-mm-dd"	
+	});
+	//flatpickr('#fechaCeloVacaUpdate', {});
 	$(document).on("change", "#selectServidoUpdate",function (){  //YO NO TOQUE NADA
 		var varservido = $(this).val();
 		if(varservido==1){ 
@@ -304,13 +304,15 @@ $(function(){
 					$('#listarCelosNo').show('slow');
 					$('#Title_celos').show('slow');
 					//$("#listCel").empty();
+					$("#msjCel").empty();
 				}
 				else{
 					$('#listarMonta').hide(500);
 					$('#listarInseminacion').hide(500);
 					$('#Title_celos').hide(500);
 					$('#listarCelosNo').hide(500);
-					$("#listCel").html("<center><h5><strong>No hay celos!!!</strong></h5></center>");
+					$("#msjCel").html("<center><h5><strong>No hay celos!!!</strong></h5></center>");
+					$("#listCel").empty();
 				}
 			}, 'json');
 	}
@@ -523,7 +525,7 @@ $(function(){
 				$('#listarInseminacion').hide(500);
 				$('#Title_celos').hide(500);
 				$('#listarCelosNo').hide(500);
-				$("#listCel").html("<center><h5><strong>No hay celos!!!</strong></h5></center>");
+				$("#msjCel").html("<center><h5><strong>No hay celos!!!</strong></h5></center>");
 			}
 		}
 		oculCampCel();

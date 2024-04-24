@@ -113,7 +113,7 @@
 					while($registro = mysqli_fetch_array($resultado)){ 
 						$jTableResult['tabsMonta'] .= "<div class='card mb-10'>
                                         <div class='card-body'>
-											<div class='row'>
+											<div class='row' >
 											    <!--<div>
 													<input type='text' id='idServicioAn' value='" . $registro['idReproduccion'] . "'>
 												</div>-->
@@ -125,24 +125,26 @@
 													<h6 class='modal-title'>'".$registro['fechaCelo']."'</h6>
 												</div>
 												<div class='col-sm-5 d-flex justify-content-end align-items-center'>
+												
 													<button class='btn' id='btnEliminarCardCel' data-idReproduccion='".$registro['idReproduccion']."'  data-tipo='1' style='background-color: red; color: #fff;  margin-right: 1rem;'><i class='fa-solid fa-trash'></i></button>     
 
 													<button class='btn' id='btnActualizarCardCelo' data-idReproduccionCeloUpdate='".$registro['idReproduccion']."'  data-tipo-update='1'  data-toggle='modal'
 													data-target='#mdreproduccionUpdate'  style='background-color: #FFC300; color: black;'><i class='fa-solid fa-pen-to-square'></i></button>
+
 												</div>								
 											</div>
 											<div class='row'>
 												<div class='col-sm-3' >
 													<h6 class='modal-title font-weight-bold'>Servido: </h6>
 												</div>												
-												<div class='col-sm-3' >
+												<div class='col-sm-3' margin-bottom: 5rem;>
 													<h6 class='modal-title '>'".(($registro['servido'])== '1' ? 'Si' : '')."'</h6>
 													
 												</div>
 											</div>	
 											<div class='row'>
 												<div class='col-sm-3' >
-													<h6 class='modal-title font-weight-bold'>Metodo: </h6>
+													<h6 class='modal-title font-weight-bold' >Metodo: </h6>
 												</div>												
 												<div class='col-sm-3' >
 													<h6 class='modal-title'>'".(($registro['metodoRep'])== '1' ? 'Monta' : '')."'</h6>
