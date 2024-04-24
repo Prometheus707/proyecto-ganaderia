@@ -22,7 +22,9 @@ $(document).ready(function(){
 		}	
 	});
 	
-	$(document).on("click", "#divChekeo",function (){ $("#crearReproduccion").show();	});	
+	$(document).on("click", "#divChekeo",function (){ 
+		//$("#crearReproduccion").show();	
+	});	
 	$(document).on("click", "#divVacunas",function (){		});	
 	$(document).on("click", "#divDesparacitar",function (){		});	
 	$(document).on("click", "#divPartos",function (){	});	
@@ -51,7 +53,7 @@ $(document).ready(function(){
 				$("#idVacaForm").val(data.idAnimalCelo_fk);	
 				$("#idVacaFormUpdate").val(data.idAnimalCelo_fk);	
 
-				alert(data.idAnimalCelo_fk)
+				//alert(data.idAnimalCelo_fk)
 
 			}, 'json');			
 		// $('[data-widget="pushmenu"]').PushMenu('toggle');

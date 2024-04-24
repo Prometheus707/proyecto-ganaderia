@@ -10,7 +10,9 @@
 	Switch ($_REQUEST['action']) 
 	{ 
 		case 'numCelosF':
+			
 			$jTableResult = array();
+				
 				$jTableResult['ttlServicioF']="";
 
 				$query="SELECT idReproduccion from servicio WHERE codigoVacaRep='".$_POST['idAnimalTtlF']."';";
@@ -100,7 +102,7 @@
 					FROM servicio
 					INNER JOIN animales  
 					ON servicio.numeroRegistroM = animales.idAnimal
-					WHERE  metodoRep = 1  AND codigoVacaRep ='".$_POST['idAnimalListCelo']."';";
+					WHERE  metodoRep = 1  AND codigoVacaRep ='".$_POST['idAnimalListCelo']."' ORDER BY `fechaCelo` DESC ;";
 					$resultado = mysqli_query($conn, $query);
 					$jTableResult['tabsMonta'] .= "<div class='card'>
                                     <div class='card-header' style='background-color:$varCabeceraTabla; color: white;'>
@@ -122,10 +124,11 @@
 												<div class='col-sm-4' >
 													<h6 class='modal-title'>'".$registro['fechaCelo']."'</h6>
 												</div>
-												<div class='col-sm-5 d-flex justify-content-end align-items-center' >
+												<div class='col-sm-5 d-flex justify-content-end align-items-center'>
 													<button class='btn' id='btnEliminarCardCel' data-idReproduccion='".$registro['idReproduccion']."'  data-tipo='1' style='background-color: red; color: #fff;  margin-right: 1rem;'><i class='fa-solid fa-trash'></i></button>     
 
-													<button class='btn' id='btnActualizarCardCelo' data-idReproduccionCeloUpdate='".$registro['idReproduccion']."'  data-toggle='modal' data-target='#mdreproduccionUpdate' data-backdrop='false' data-tipo-update='1' style='background-color: red; color: #fff;'><i class='fa-solid fa-pen-to-square'></i></button>
+													<button class='btn' id='btnActualizarCardCelo' data-idReproduccionCeloUpdate='".$registro['idReproduccion']."'  data-tipo-update='1'  data-toggle='modal'
+													data-target='#mdreproduccionUpdate'  style='background-color: #FFC300; color: black;'><i class='fa-solid fa-pen-to-square'></i></button>
 												</div>								
 											</div>
 											<div class='row'>
@@ -139,7 +142,7 @@
 											</div>	
 											<div class='row'>
 												<div class='col-sm-3' >
-													<h6 class='modal-title font-weight-bold'>Metodo:</h6>
+													<h6 class='modal-title font-weight-bold'>Metodo: </h6>
 												</div>												
 												<div class='col-sm-3' >
 													<h6 class='modal-title'>'".(($registro['metodoRep'])== '1' ? 'Monta' : '')."'</h6>
@@ -149,7 +152,7 @@
 												<div class='col-sm-4' >
 													<h6 class='modal-title font-weight-bold'>Macho: </h6>
 												</div>												
-												<div class='col-sm-3' >
+												<div class='col-sm-8' >
 													<h6 class='modal-title'>'".$registro['codigoAnimMonta']."'</h6>
 												</div>
 											</div>
@@ -157,13 +160,13 @@
 												<div class='col-sm-4' >
 													<h6 class='modal-title font-weight-bold'>Nombre: </h6>
 												</div>												
-												<div class='col-sm-3' >
+												<div class='col-sm-8' >
 													<h6 class='modal-title'>'".$registro['nombreAnimMonta']."'</h6>
 												</div>
 											</div>
 											<div class='row'>
 												<div class='col-sm-4' >
-													<h6 class='modal-title font-weight-bold'>Observaciones:</h6>
+													<h6 class='modal-title font-weight-bold'>Observacion: </h6>
 												</div>												
 												<div class='col-sm-8' >
 													<h6 class='modal-title'>'".$registro['observacionesServ']."'</h6>
@@ -193,7 +196,7 @@
 				FROM servicio
 				INNER JOIN pajilla  
 				ON servicio.numeroRegistroM = pajilla.idPajilla
-				WHERE  metodoRep = 2  AND codigoVacaRep ='".$_POST['idAnimalListCeloI']."';";
+				WHERE  metodoRep = 2  AND codigoVacaRep ='".$_POST['idAnimalListCeloI']."' ORDER BY `fechaCelo` DESC ;";
 				$resultado = mysqli_query($conn, $query);
 				$jTableResult['tabsInseminacion'] .= "<div class='card'>
                                     <div class='card-header' style='background-color:$varCabeceraTabla; color: white;>
@@ -217,9 +220,9 @@
 												<div class='col-sm-5 d-flex justify-content-end align-items-center' >
 													<button class='btn' id='btnEliminarCardCel' data-idReproduccion='".$registro['idReproduccion']."' data-tipo='2' style='background-color: red; color: #fff; margin-right: 1rem;'><i class='fa-solid fa-trash'></i></button>
 
-													<button class='btn' id='btnActualizarCardCelo' data-idReproduccionCeloUpdate='".$registro['idReproduccion']."'  data-tipo-update='2'  data-toggle='modal' data-target='#mdreproduccionUpdate' data-backdrop='false' style='background-color: red; color: #fff;  '><i class='fa-solid fa-pen-to-square'></i></button>	
+													<button class='btn' id='btnActualizarCardCelo' data-idReproduccionCeloUpdate='".$registro['idReproduccion']."'  data-tipo-update='2' data-toggle='modal' data-target='#mdreproduccionUpdate'  style='background-color: #FFC300; color: black;  '><i class='fa-solid fa-pen-to-square'></i></button>	
 												</div>										
-											</div>
+											</div> 
 											<div class='row'>
 												<div class='col-sm-3' >
 													<h6 class='modal-title font-weight-bold'>Servido: </h6>
@@ -230,7 +233,7 @@
 											</div>	
 											<div class='row'>
 												<div class='col-sm-3' >
-													<h6 class='modal-title font-weight-bold'>Metodo:</h6>
+													<h6 class='modal-title font-weight-bold'>Metodo: </h6>
 												</div>												
 												<div class='col-sm-3' >
 													<h6 class='modal-title'>'".(($registro['metodoRep'])== '2' ? 'I.A' : '')."'</h6>
@@ -240,7 +243,7 @@
 												<div class='col-sm-4' >
 													<h6 class='modal-title font-weight-bold'>Macho: </h6>
 												</div>												
-												<div class='col-sm-3' >
+												<div class='col-sm-8' >
 													<h6 class='modal-title'>'".$registro['registroPajillaN']."'</h6>
 												</div>
 											</div>
@@ -248,13 +251,13 @@
 												<div class='col-sm-4' >
 													<h6 class='modal-title font-weight-bold'>Nombre: </h6>
 												</div>												
-												<div class='col-sm-6' >
+												<div class='col-sm-8' >
 													<h6 class='modal-title'>'".$registro['nombreAnimPajilla']."'</h6>
 												</div>
 											</div>
 											<div class='row'>
 												<div class='col-sm-4' >
-													<h6 class='modal-title font-weight-bold'>Observaciones:</h6>
+													<h6 class='modal-title font-weight-bold'>Observacion: </h6>
 												</div>												
 												<div class='col-sm-8' >
 													<h6 class='modal-title'>'".$registro['observacionesServ']."'</h6>
@@ -277,7 +280,7 @@
 				servicio.servido,
 				servicio.observacionesServ
 				FROM servicio
-				WHERE  servido = 2  AND codigoVacaRep ='".$_POST['idAnimalListCeloNo']."';";
+				WHERE  servido = 2  AND codigoVacaRep ='".$_POST['idAnimalListCeloNo']."' ORDER BY `fechaCelo` DESC ;";
 				$resultado = mysqli_query($conn, $query);
 				$jTableResult['tabsNoServidos'] .= "<div class='card'>
                                     <div class='card-header' style='background-color:$varCabeceraTabla; color: white;>
@@ -286,7 +289,7 @@
                                     <div class='card-body' style='max-height: 400px; overflow-y: auto;'>
                     ";
 				while($registro = mysqli_fetch_array($resultado)){ 
-				$jTableResult['tabsNoServidos'] .= "<div class='card mb-10'>
+				$jTableResult['tabsNoServidos'] .= "<div class='card mb-10 '>
                                         <div class='card-body'>
 											<div class='row'>
 												<!--<div>		
@@ -301,7 +304,8 @@
 												<div class='col-sm-5 d-flex justify-content-end align-items-center' >
 													<button class='btn' id='btnEliminarCardCel' data-idReproduccion='".$registro['idReproduccion']."' data-tipo='3' style='background-color: red; color: #fff;  margin-right: 1rem;'><i class='fa-solid fa-trash'></i></button>
 
-													<button class='btn' id='btnActualizarCardCelo' data-idReproduccionCeloUpdate='".$registro['idReproduccion']."' data-tipo-update='3'  data-toggle='modal' data-target='#mdreproduccionUpdate' style='background-color: red; color: #fff; '><i class='fa-solid fa-pen-to-square'></i></button>
+													<button class='btn' id='btnActualizarCardCelo' data-idReproduccionCeloUpdate='".$registro['idReproduccion']."' data-tipo-update='3'  data-toggle='modal'   data-target='#mdreproduccionUpdate' 
+													style='background-color: #FFC300; color: black; '><i class='fa-solid fa-pen-to-square'></i></button>
 												</div>													
 											</div>
 											<div class='row'>
@@ -314,7 +318,7 @@
 											</div>	
 											<div class='row'>
 												<div class='col-sm-4' >
-													<h6 class='modal-title font-weight-bold'>Observaciones:</h6>
+													<h6 class='modal-title font-weight-bold'>Observacion: </h6>
 												</div>												
 												<div class='col-sm-8' >
 													<h6 class='modal-title'>'".$registro['observacionesServ']."'</h6>
@@ -363,18 +367,18 @@
 												</div>													
 											</div>
 											<div class='row'>
-												<div class='col-sm-3' >
+												<div class='col-sm-4' >
 													<h6 class='modal-title'><strong>N°registro: </strong></h6>
 												</div>												
-												<div class='col-sm-4' >
+												<div class='col-sm-6' >
 													<h6 class='modal-title'>'".$registro['numeroRegistro']."'</h6>
 												</div>
 											</div>
 											<div class='row'>
-												<div class='col-sm-3' >
+												<div class='col-sm-4' >
 													<h6 class='modal-title font-weight-bold'>Nombre: </h6>
 												</div>												
-												<div class='col-sm-3' >
+												<div class='col-sm-8' >
 													<h6 class='modal-title '>'".$registro['nombrePajilla']."'</h6>
 												</div>
 											</div>	
@@ -576,7 +580,7 @@
 				$resultado = mysqli_query($conn, $query2);
 				$numero = mysqli_num_rows($resultado);
 				if($numero==0) {
-					if(($_POST['numeroRegistroR']=="") or ($_POST['nombreToroP']=="") or ($_POST['idrazaToroP']=="0")){
+					if(($_POST['numeroRegistroR']=="") or ($_POST['nombreToroP']=="") or ($_POST['idrazaToroP']=="") or ($_POST['selRazPaj'] == "0")){
 						$jTableResult['msj']="CAMPOS OBLIGATORIOSSSSSSSSS";
 						$jTableResult['resultd']="0";
 					}

@@ -19,7 +19,8 @@
 <link rel="stylesheet" href="../../herramientas/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css">
 
 
-
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <!--
 <link	href="../../herramientas/assets/dist/css/bootstrap.min.css" rel="stylesheet">	
 <link 	rel="stylesheet" href="../../herramientas/plugins/temata tables/datapusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">

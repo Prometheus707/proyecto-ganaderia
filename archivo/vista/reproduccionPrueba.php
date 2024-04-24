@@ -12,7 +12,7 @@
 					<div class="row" >
 						<div class="col-lg-4" >
 							<input type="hidden" id="codigoVaca" name="codigoVaca"  class="form-control"    readonly />
-							<input type="text" id="idVacaForm" name="idVacaForm" class="form-control"    readonly />
+							<input type="hidden" id="idVacaForm" name="idVacaForm" class="form-control"    readonly />
 						</div>
 					</div>				
 					<div class="row">
@@ -109,6 +109,9 @@
 					<div id="listCel">
 
 					</div>
+					<div id="msjCel">
+
+					</div>
 				</div>
 				<div class="modal-footer">
 					<div class="modal-footer">
@@ -133,9 +136,9 @@
 					<div class="row" >
 						<div class="col-lg-4" >
 							<input type="hidden" id="codigoVacaUpdate" name="codigoVacaUpdate"  class="form-control"    readonly />
-							<input type="text" id="idVacaFormUpdate" name="idVacaFormUpdate" class="form-control"    readonly />
-							<input type="text" id="idCeloFormUpdate" name="idCeloFormUpdate" class="form-control"    readonly />
-							<input type="text" id="idCeloBdUpdate" name="idCeloFormUpdate" class="form-control"    readonly />
+							<input type="hidden" id="idVacaFormUpdate" name="idVacaFormUpdate" class="form-control"    readonly />
+							<input type="hidden" id="idCeloFormUpdate" name="idCeloFormUpdate" class="form-control"    readonly />
+							<input type="hidden" id="idCeloBdUpdate" name="idCeloFormUpdate" class="form-control"    readonly />
 						</div>
 					</div>				
 					<div class="row">
@@ -275,7 +278,7 @@
 							<h6 class="modal-title" >Raza toro</h6>
 							<select class="form-select" aria-label="Default select example" id="razaListaPajilla" name="razaListaPajilla" >
 							</select>
-							<input  type="text" class="form-control" id="idRazaP" name="idRazaP" aria-describedby="emailHelp" >
+							<input  type="hidden" class="form-control" id="idRazaP" name="idRazaP" aria-describedby="emailHelp" >
 						</div>
 					</div>    
 					<div class="row">

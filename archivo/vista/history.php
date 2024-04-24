@@ -147,7 +147,7 @@ $fechaReg = date("Y-m-d h:m");
 										<i class="fa fa-hand-paper-o" aria-hidden="true"></i>
 									</span>
 									<div  class="info-box-content">
-										<span class="info-box-text">Chequeo</span>
+										<span class="info-box-text">Celos</span>
 										<p id='totalServicio' name='totalServicio' ></p>
 									</div>
 								</div>
