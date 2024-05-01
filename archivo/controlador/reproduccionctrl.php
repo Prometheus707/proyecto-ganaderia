@@ -578,6 +578,7 @@
             $jTableResult = array();
             $jTableResult['msj']="";
             $jTableResult['resultd']="";
+
 				$query2 = "SELECT idPajilla  FROM pajilla WHERE numeroRegistro= '".$_POST['numeroRegistroR']."';   ";
 				$resultado = mysqli_query($conn, $query2);
 				$numero = mysqli_num_rows($resultado);
@@ -643,6 +644,36 @@
 			print json_encode($jTableResult);
 		break;
 		/*REGISTRAR REPRODUCCION*/ 
+		// case 'guardarCheck':
+        //     $jTableResult = array();
+        //     $jTableResult['msj']="";
+        //     $jTableResult['resultd']="";
+		// 		if (($_POST['servicio']=="") or ($_POST['observacionesRep']=="")){
+		// 			$jTableResult['msj']="TIENES CAMPOS OBLIGATORIOS POR LLENAR";
+		// 			$jTableResult['resultd']="0";
+		// 		}
+		// 		else{
+		// 			$query="INSERT INTO servicio SET 
+		// 			codigoVacaRep='".$_POST['codVaca']."',
+		// 			fechaCelo='".$_POST['fechCelo']."',
+		// 			servido='".$_POST['servicio']."',
+		// 			observacionesServ='".$_POST['observacionesRep']."',
+		// 			idUsuario='".$_POST['idRespCelo']."';";
+		// 			if ($resultado=mysqli_query($conn,$query))
+		// 				{
+		// 					mysqli_commit($conn);
+		// 					$jTableResult['msj']="  DATO GUARDADO CORRECTAMENTE";
+		// 					$jTableResult['resultd']="1";
+		// 				}
+		// 			else
+		// 				{
+		// 					mysqli_rollback($conn);
+		// 					$jTableResult['msj']="  ERROR AL GUARDAR. INTENTE NUEVAMENTE.";
+		// 					$jTableResult['resultd']="0";
+		// 				}
+		// 		}
+		// 	print json_encode($jTableResult);
+        // break;
 		case 'guardarCheck':
             $jTableResult = array();
             $jTableResult['msj']="";
@@ -652,17 +683,16 @@
 					$jTableResult['resultd']="0";
 				}
 				else{
-					$query="INSERT INTO servicio SET 
-					codigoVacaRep='".$_POST['codVaca']."',
-					fechaCelo='".$_POST['fechCelo']."',
-					servido='".$_POST['servicio']."',
-					observacionesServ='".$_POST['observacionesRep']."',
-					idUsuario='".$_POST['idRespCelo']."';";
-					if ($resultado=mysqli_query($conn,$query))
+
+					$query=$conn->prepare("INSERT INTO servicio (codigoVacaRep, fechaCelo, servido, observacionesServ, idUsuario) VALUES (?, ?, ?, ?, ?)");
+
+					$query ->bind_param("isssi", $_POST['codVaca'], $_POST['fechCelo'], $_POST['servicio'], $_POST['observacionesRep'], $_POST['idRespCelo']);
+
+					if ($query -> execute())
 						{
 							mysqli_commit($conn);
-							$jTableResult['msj']="  DATO GUARDADO CORRECTAMENTE";
-							$jTableResult['resultd']="1";
+							$jTableResult['msj'] = "DATO GUARDADO CORRECTAMENTE";
+							$jTableResult['resultd'] = "1";
 						}
 					else
 						{
@@ -670,6 +700,7 @@
 							$jTableResult['msj']="  ERROR AL GUARDAR. INTENTE NUEVAMENTE.";
 							$jTableResult['resultd']="0";
 						}
+					$query -> close();
 				}
 			print json_encode($jTableResult);
         break;

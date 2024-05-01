@@ -5,6 +5,7 @@ $(function(){
 	$("#fechaCeloVacaUpdate").datepicker({
 	 	dateFormat: "yy-mm-dd"	
 	});
+	
 	//flatpickr('#fechaCeloVacaUpdate', {});
 	$(document).on("change", "#selectServidoUpdate",function (){  //YO NO TOQUE NADA
 		var varservido = $(this).val();
@@ -342,6 +343,7 @@ $(function(){
 	$('#listarCelosNo').on('click', function() { 
 		actualizarListaNoServido();
 	});
+	
 	//ELIMINAR PAJILLA
 	$(document).on('click', '#btnEliminarCardPajilla', function(){
 		var datPajiId = $(this).attr('data-pajillaId') //INGRESA A LOS ATRIBUTOS DEL BOTON
@@ -718,6 +720,7 @@ $(function(){
 	}); 
 	//$('#btnguardarCelo').on('click', function() { 
 	$(document).on("click", "#btnguardarCelo",function (){
+		
 		if($("#selectServido").val()=="0"){ alertify.error("Debe seleccionar si esta servido o no");	}
 		if($("#selectServido").val()=="1")
 		{
