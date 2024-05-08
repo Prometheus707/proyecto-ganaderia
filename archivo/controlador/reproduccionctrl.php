@@ -90,6 +90,7 @@
 		case 'arregloMonta':
 				$jTableResult = array();
 					$jTableResult['tabsMonta']="";
+					$jTableResult['numeroFilas'] = "";
 					$query="SELECT servicio.idReproduccion,
 					servicio.codigoVacaRep,
 					animales.nombreAnimal as nombreAnimMonta,
@@ -104,9 +105,14 @@
 					ON servicio.numeroRegistroM = animales.idAnimal
 					WHERE  metodoRep = 1  AND codigoVacaRep ='".$_POST['idAnimalListCelo']."' ORDER BY `fechaCelo` DESC ;";
 					$resultado = mysqli_query($conn, $query);
+					$numero = mysqli_num_rows($resultado);
+					$jTableResult['numeroFilas'] = $numero;
 					$jTableResult['tabsMonta'] .= "<div class='card'>
                                     <div class='card-header' style='background-color:$varCabeceraTabla; color: white;'>
                                         <h5 class='card-title'>LISTA MONTA</h5>
+										<div class=' d-flex justify-content-end align-items-center'>   
+											<p>total: <strong>$numero</strong></p>
+										</div>
                                     </div>
                                     <div class='card-body' style='max-height: 400px; overflow-y: auto;'>
                     ";
@@ -186,6 +192,7 @@
 		case 'arregloInseminacion':
 			$jTableResult = array();
 				$jTableResult['tabsInseminacion']="";
+				$jTableResult['numeroFilas'] = "";
 				$query="SELECT servicio.idReproduccion,
 				servicio.codigoVacaRep,
 				pajilla.nombrePajilla as nombreAnimPajilla,
@@ -200,10 +207,15 @@
 				ON servicio.numeroRegistroM = pajilla.idPajilla
 				WHERE  metodoRep = 2  AND codigoVacaRep ='".$_POST['idAnimalListCeloI']."' ORDER BY `fechaCelo` DESC ;";
 				$resultado = mysqli_query($conn, $query);
+				$numero = mysqli_num_rows($resultado);
+				$jTableResult['numeroFilas'] = $numero;
 				$jTableResult['tabsInseminacion'] .= "<div class='card'>
-                                    <div class='card-header' style='background-color:$varCabeceraTabla; color: white;>
-                                        <h5 class='card-title'>LISTA INSEMINACION</h5>
-                                    </div>
+									<div class='card-header' style='background-color:$varCabeceraTabla; color: white;'>
+										<h5 class='card-title'>LISTA INSEMINACION</h5>
+										<div class=' d-flex justify-content-end align-items-center'>   
+											<p>total: <strong>$numero</strong></p>
+										</div>
+									</div>
                                     <div class='card-body' style='max-height: 400px; overflow-y: auto;'>
                     ";
 				while($registro = mysqli_fetch_array($resultado)){ 
@@ -276,6 +288,7 @@
 		case 'arregloNoservidos':
 			$jTableResult = array();
 				$jTableResult['tabsNoServidos']="";
+				$jTableResult['numeroFilas'] = "";
 				$query="SELECT servicio.idReproduccion,
 				servicio.codigoVacaRep,
 				servicio.fechaCelo, 
@@ -284,10 +297,15 @@
 				FROM servicio
 				WHERE  servido = 2  AND codigoVacaRep ='".$_POST['idAnimalListCeloNo']."' ORDER BY `fechaCelo` DESC ;";
 				$resultado = mysqli_query($conn, $query);
+				$numero = mysqli_num_rows($resultado);
+				$jTableResult['numeroFilas'] = $numero;
 				$jTableResult['tabsNoServidos'] .= "<div class='card'>
-                                    <div class='card-header' style='background-color:$varCabeceraTabla; color: white;>
-                                        <h5 class='card-title'>LISTA NO SERVIDO</h5>
-                                    </div>
+									<div class='card-header' style='background-color:$varCabeceraTabla; color: white;'>
+										<h5 class='card-title'>NO SERVIDO</h5>
+										<div class=' d-flex justify-content-end align-items-center'>   
+											<p>total: <strong>$numero</strong></p>
+										</div>
+									</div>
                                     <div class='card-body' style='max-height: 400px; overflow-y: auto;'>
                     ";
 				while($registro = mysqli_fetch_array($resultado)){ 
@@ -336,6 +354,7 @@
 		case 'arregloPajillaCel':
 			$jTableResult = array();
 				$jTableResult['tabsPajilla']="";
+				$jTableResult['numTtPajillas']="";
 				$query="SELECT pajilla.idPajilla, 
 				pajilla.fechaRegistroP,
 				pajilla.numeroRegistro, 
@@ -346,10 +365,15 @@
 				INNER JOIN raza
 				ON pajilla.razaPajilla = raza.idRaza;";
 				$resultado = mysqli_query($conn, $query);
+				$numero = mysqli_num_rows($resultado);
+				$jTableResult['numTtPajillas']=$numero;
 				$jTableResult['tabsPajilla'] .= "<div class='card'>
-                                    <div class='card-header' style='background-color:$varCabeceraTabla; color: white;>
-                                        <h5 class='card-title'>LISTA DE PAJILLAS</h5>
-                                    </div>
+									<div class='card-header' style='background-color:$varCabeceraTabla; color: white;'>
+										<h5 class='card-title'>PAJILLAS</h5></h5>
+										<div class=' d-flex justify-content-end align-items-center'>   
+											<p>total: <strong>$numero</strong></p>
+										</div>
+									</div>
                                     <div class='card-body' style='max-height: 400px; overflow-y: auto;'>
                     ";
 				while($registro = mysqli_fetch_array($resultado)){ 
@@ -365,7 +389,7 @@
 												<div class='col-sm-5 d-flex justify-content-end align-items-center' >
 													<button class='btn' id='btnEliminarCardPajilla' data-pajillaId = '".$registro['idPajilla']."' style='background-color: red; color: #fff; margin-right: 1rem;' ><i class='fa-solid fa-trash'></i></button>
 
-													<button class='btn' id='btnActualizarCardPajilla' data-pajillaIdUpdate = '".$registro['idPajilla']."' style='background-color: red; color: #fff;'  data-toggle='modal' data-backdrop='false' data-target='#actualizarPajilla' ><i class='fa-solid fa-pen-to-square'></i></button>
+													<button class='btn' id='btnActualizarCardPajilla' data-pajillaIdUpdate = '".$registro['idPajilla']."' style='background-color: #FFC300; color: black;'  data-toggle='modal' data-backdrop='false' data-target='#actualizarPajilla' ><i class='fa-solid fa-pen-to-square'></i></button>
 												</div>													
 											</div>
 											<div class='row'>
@@ -574,35 +598,79 @@
 			print json_encode($jTableResult);
 		break;
 		/*REGISTRAR PAJILLA*/ 
+		// case 'guardarPajilla':
+        //     $jTableResult = array();
+        //     $jTableResult['msj']="";
+        //     $jTableResult['resultd']="";
+
+		// 		$query2 = "SELECT idPajilla  FROM pajilla WHERE numeroRegistro= '".$_POST['numeroRegistroR']."';   ";
+		// 		$resultado = mysqli_query($conn, $query2);
+		// 		$numero = mysqli_num_rows($resultado);
+		// 		if($numero==0) {
+		// 			if(($_POST['numeroRegistroR']=="") or ($_POST['nombreToroP']=="") or ($_POST['idrazaToroP']=="") or ($_POST['selRazPaj'] == "0")){
+		// 				$jTableResult['msj']="CAMPOS OBLIGATORIOS";
+		// 				$jTableResult['resultd']="0";
+		// 			}
+		// 			else{
+		// 				$query="INSERT INTO pajilla SET 
+		// 				fechaRegistroP='".$_POST['fechRegPaji']."',
+		// 				razaPajilla='".$_POST['idrazaToroP']."',
+		// 				nombrePajilla='".$_POST['nombreToroP']."',
+		// 				respRegPajilla='".$_POST['idRespRegP']."',
+		// 				numeroRegistro='".$_POST['numeroRegistroR']."';";
+		// 				if ($resultado=mysqli_query($conn,$query)){
+		// 					mysqli_commit($conn);
+		// 					$jTableResult['msj']="  DATO GUARDADO CORRECTAMENTE";
+		// 					$jTableResult['resultd']="1";
+		// 				} else {
+		// 					mysqli_rollback($conn);
+		// 					$jTableResult['msj']="  ERROR AL GUARDAR. INTENTE NUEVAMENTE.";
+		// 					$jTableResult['resultd']="0";
+		// 				}
+		// 			}
+					
+		// 		}else{
+		// 			//mysqli_commit($conn);
+		// 			$jTableResult['msj']="CODIGO DE LA PAJILLA YA EXISTE";
+		// 			$jTableResult['resultd']="0";
+		// 		}                
+        //     print json_encode($jTableResult);
+        // break;
 		case 'guardarPajilla':
             $jTableResult = array();
             $jTableResult['msj']="";
             $jTableResult['resultd']="";
 
-				$query2 = "SELECT idPajilla  FROM pajilla WHERE numeroRegistro= '".$_POST['numeroRegistroR']."';   ";
-				$resultado = mysqli_query($conn, $query2);
-				$numero = mysqli_num_rows($resultado);
+				$queryCheck = "SELECT idPajilla  FROM pajilla WHERE numeroRegistro=?    ";
+				$statementCheck = $conn->prepare($queryCheck);
+				$statementCheck->bind_param("s", $_POST['numeroRegistroR']);
+				$statementCheck->execute();
+				$statementCheck->store_result();
+				$numero = $statementCheck->num_rows;
+				$statementCheck->close();
 				if($numero==0) {
 					if(($_POST['numeroRegistroR']=="") or ($_POST['nombreToroP']=="") or ($_POST['idrazaToroP']=="") or ($_POST['selRazPaj'] == "0")){
-						$jTableResult['msj']="CAMPOS OBLIGATORIOSSSSSSSSS";
+						$jTableResult['msj']="CAMPOS OBLIGATORIOS";
 						$jTableResult['resultd']="0";
 					}
 					else{
-						$query="INSERT INTO pajilla SET 
-						fechaRegistroP='".$_POST['fechRegPaji']."',
-						razaPajilla='".$_POST['idrazaToroP']."',
-						nombrePajilla='".$_POST['nombreToroP']."',
-						respRegPajilla='".$_POST['idRespRegP']."',
-						numeroRegistro='".$_POST['numeroRegistroR']."';";
-						if ($resultado=mysqli_query($conn,$query)){
-							mysqli_commit($conn);
-							$jTableResult['msj']="  DATO GUARDADO CORRECTAMENTE";
-							$jTableResult['resultd']="1";
-						} else {
-							mysqli_rollback($conn);
-							$jTableResult['msj']="  ERROR AL GUARDAR. INTENTE NUEVAMENTE.";
-							$jTableResult['resultd']="0";
-						}
+						 // Crear consulta preparada para insertar la pajilla
+						 $query = $conn->prepare("INSERT INTO pajilla (fechaRegistroP, razaPajilla, nombrePajilla, respRegPajilla, numeroRegistro) VALUES (?, ?, ?, ?, ?)");
+						 $query->bind_param("sisis", $_POST['fechRegPaji'], $_POST['idrazaToroP'], $_POST['nombreToroP'], $_POST['idRespRegP'], $_POST['numeroRegistroR']);
+			 
+						 // Ejecutar consulta preparada
+						 if ($query->execute()) {
+							 mysqli_commit($conn);
+							 $jTableResult['msj'] = "DATO GUARDADO CORRECTAMENTE";
+							 $jTableResult['resultd'] = "1";
+						 } else {
+							 mysqli_rollback($conn);
+							 $jTableResult['msj'] = "ERROR AL GUARDAR. INTENTE NUEVAMENTE.";
+							 $jTableResult['resultd'] = "0";
+						 }
+			 
+						 // Cerrar consulta preparada
+						 $query->close();
 					}
 					
 				}else{
@@ -616,17 +684,18 @@
 			$jTableResult = array();
 				$jTableResult['msj']="";
 				$jTableResult['resultd']="";
-				// $query2 = "SELECT idPajilla  FROM pajilla WHERE numeroRegistro= '".$_POST['numRegUpPa']."';   ";
-				// $resultado = mysqli_query($conn, $query2);
-				// $numero = mysqli_num_rows($resultado);
-				// if($numero==0) {
-					$query="UPDATE pajilla SET fechaRegistroP = '".$_POST['fechaRegPaUp']."', 
-					numeroRegistro = '".$_POST['numRegUpPa']."', 
-					nombrePajilla = '".$_POST['nombretUpd']."', 
-					razaPajilla = '".$_POST['razSelPaUp']."' 
-					WHERE idPajilla = '".$_POST['datPajiIdU']."';";
-						$resultado=mysqli_query($conn, $query);
-						if ($resultado=mysqli_query($conn,$query)){
+					$query=$conn->prepare("UPDATE pajilla SET fechaRegistroP = ?, 
+					numeroRegistro =  ?,
+					nombrePajilla = ?, 
+					razaPajilla = ?
+					WHERE idPajilla = ?");
+					$query->bind_param("sssii",
+					 $_POST['fechaRegPaUp'], 
+					 $_POST['numRegUpPa'], 
+					 $_POST['nombretUpd'], 
+					 $_POST['razSelPaUp'], 
+					 $_POST['datPajiIdU']);
+						if ($query->execute()){
 							mysqli_commit($conn);
 							$jTableResult['msj']="  DATO GUARDADO CORRECTAMENTE";
 							$jTableResult['resultd']="1";
@@ -635,12 +704,8 @@
 							$jTableResult['msj']="  ERROR AL GUARDAR. INTENTE NUEVAMENTE.";
 							$jTableResult['resultd']="0";
 						}
-				// }
-				// else{
-				// 	//mysqli_commit($conn);
-				// 	$jTableResult['msj']="CODIGO DE LA PAJILLA YA EXISTE";
-				// 	$jTableResult['resultd']="0";
-				// }            
+					$query -> close();
+				       
 			print json_encode($jTableResult);
 		break;
 		/*REGISTRAR REPRODUCCION*/ 
@@ -704,6 +769,39 @@
 				}
 			print json_encode($jTableResult);
         break;
+		// case 'actualizarCheck':
+        //     $jTableResult = array();
+        //     $jTableResult['msj']="";
+        //     $jTableResult['resultd']="";
+		// 		if (($_POST['servicioUpNo']=="") or ($_POST['observacionesRepUpNo']=="")){
+		// 			$jTableResult['msj']="TIENES CAMPOS OBLIGATORIOS POR LLENAR";
+		// 			$jTableResult['resultd']="0";
+		// 		}
+		// 		else{
+		// 			$query="UPDATE servicio SET
+		// 			codigoVacaRep='".$_POST['codVacaUpNo']."',
+		// 			fechaCelo='".$_POST['fechCeloUpNo']."',
+		// 			servido='".$_POST['servicioUpNo']."',
+		// 			observacionesServ='".$_POST['observacionesRepUpNo']."',
+		// 			metodoRep = '0',
+		// 			numeroRegistroM= '0',
+		// 			idUsuario='".$_POST['idRespCeloUpNo']."'
+		// 			where idReproduccion='".$_POST['idCeloFormUpdate']."';";
+		// 			if ($resultado=mysqli_query($conn,$query))
+		// 				{
+		// 					mysqli_commit($conn);
+		// 					$jTableResult['msj']="  DATO ACTUALIZADO CORRECTAMENTE";
+		// 					$jTableResult['resultd']="1";
+		// 				}
+		// 			else
+		// 				{
+		// 					mysqli_rollback($conn);
+		// 					$jTableResult['msj']="  ERROR AL ACTUALIZAR. INTENTE NUEVAMENTE.";
+		// 					$jTableResult['resultd']="0";
+		// 				}
+		// 		}
+		// 	print json_encode($jTableResult);
+        // break;
 		case 'actualizarCheck':
             $jTableResult = array();
             $jTableResult['msj']="";
@@ -713,27 +811,22 @@
 					$jTableResult['resultd']="0";
 				}
 				else{
-					$query="UPDATE servicio SET
-					codigoVacaRep='".$_POST['codVacaUpNo']."',
-					fechaCelo='".$_POST['fechCeloUpNo']."',
-					servido='".$_POST['servicioUpNo']."',
-					observacionesServ='".$_POST['observacionesRepUpNo']."',
-					metodoRep = '0',
-					numeroRegistroM= '0',
-					idUsuario='".$_POST['idRespCeloUpNo']."'
-					where idReproduccion='".$_POST['idCeloFormUpdate']."';";
-					if ($resultado=mysqli_query($conn,$query))
-						{
-							mysqli_commit($conn);
-							$jTableResult['msj']="  DATO ACTUALIZADO CORRECTAMENTE";
-							$jTableResult['resultd']="1";
-						}
-					else
-						{
-							mysqli_rollback($conn);
-							$jTableResult['msj']="  ERROR AL ACTUALIZAR. INTENTE NUEVAMENTE.";
-							$jTableResult['resultd']="0";
-						}
+					 // Crear consulta preparada para actualizar el servicio
+					$query = $conn->prepare("UPDATE servicio SET codigoVacaRep=?, fechaCelo=?, servido=?, observacionesServ=?, metodoRep='0', numeroRegistroM='0', idUsuario=? WHERE idReproduccion=?");
+					$query->bind_param("ssissi", $_POST['codVacaUpNo'], $_POST['fechCeloUpNo'], $_POST['servicioUpNo'], $_POST['observacionesRepUpNo'], $_POST['idRespCeloUpNo'], $_POST['idCeloFormUpdate']);
+
+					// Ejecutar consulta preparada
+					if ($query->execute()) {
+						mysqli_commit($conn);
+						$jTableResult['msj'] = "DATO ACTUALIZADO CORRECTAMENTE";
+						$jTableResult['resultd'] = "1";
+					} else {
+						mysqli_rollback($conn);
+						$jTableResult['msj'] = "ERROR AL ACTUALIZAR. INTENTE NUEVAMENTE.";
+						$jTableResult['resultd'] = "0";
+					}
+					// Cerrar consulta preparada
+					$query->close();
 				}
 			print json_encode($jTableResult);
         break;
@@ -746,72 +839,102 @@
 					$jTableResult['resultd']="0";
 				}
 				else{
-						$query="UPDATE servicio SET 
-						codigoVacaRep='".$_POST['codVacaUpdate']."',
-						fechaCelo='".$_POST['fechCeloUpdate']."',
-						servido='".$_POST['servicioUpdate']."',
-						metodoRep='".$_POST['metodoRepUpdate']."',
-						numeroRegistroM='".$_POST['codigoTorPUpdate']."',
-						observacionesServ='".$_POST['observacionesRepUpdate']."',
-						idUsuario='".$_POST['idRespCeloUpdate']."'
-						where idReproduccion='".$_POST['idCeloFormUpdateUp']."';"; 
-						if ($resultado=mysqli_query($conn,$query))
-							{
-								mysqli_commit($conn);
-								$jTableResult['msj']="  DATO ACTUALIZADO CORRECTAMENTE";
-								$jTableResult['resultd']="1";
-							}
-						else
-							{
-								mysqli_rollback($conn);
-								$jTableResult['msj']="  ERROR AL ACTUALIZAR. INTENTE NUEVAMENTE.";
-								$jTableResult['resultd']="0";
-							}
+						 // Crear consulta preparada para actualizar el servicio
+					$query = $conn->prepare("UPDATE servicio SET codigoVacaRep=?, fechaCelo=?, servido=?, metodoRep=?, numeroRegistroM=?, observacionesServ=?, idUsuario=? WHERE idReproduccion=?");
+					$query->bind_param("ssiiissi", $_POST['codVacaUpdate'], $_POST['fechCeloUpdate'], $_POST['servicioUpdate'], $_POST['metodoRepUpdate'], $_POST['codigoTorPUpdate'], $_POST['observacionesRepUpdate'], $_POST['idRespCeloUpdate'], $_POST['idCeloFormUpdateUp']);
+
+					// Ejecutar consulta preparada
+					if ($query->execute()) {
+						mysqli_commit($conn);
+						$jTableResult['msj'] = "DATO ACTUALIZADO CORRECTAMENTE";
+						$jTableResult['resultd'] = "1";
+					} else {
+						mysqli_rollback($conn);
+						$jTableResult['msj'] = "ERROR AL ACTUALIZAR. INTENTE NUEVAMENTE.";
+						$jTableResult['resultd'] = "0";
+					}
+
+					// Cerrar consulta preparada
+					$query->close();
 				}
             print json_encode($jTableResult);
         break;
+		// case 'guardarCheckCompleto':
+        //     $jTableResult = array();
+        //     $jTableResult['msj']="";
+        //     $jTableResult['resultd']="";
+		// 		if(($_POST['servicio']=="") or ($_POST['metodoRep'] =="") or ($_POST['codigoTorP'] ==0)){
+		// 			$jTableResult['msj']="TIENES CAMPOS OBLIGATORIOS POR LLENAR";
+		// 			$jTableResult['resultd']="0";
+		// 		}
+		// 		else{
+		// 				$query="INSERT INTO servicio SET 
+		// 				codigoVacaRep='".$_POST['codVaca']."',
+		// 				fechaCelo='".$_POST['fechCelo']."',
+		// 				servido='".$_POST['servicio']."',
+		// 				metodoRep='".$_POST['metodoRep']."',
+		// 				numeroRegistroM='".$_POST['codigoTorP']."',
+		// 				observacionesServ='".$_POST['observacionesRep']."',
+		// 				idUsuario='".$_POST['idRespCelo']."';";
+		// 				if ($resultado=mysqli_query($conn,$query))
+		// 					{
+		// 						mysqli_commit($conn);
+		// 						$jTableResult['msj']="  DATO GUARDADO CORRECTAMENTE";
+		// 						$jTableResult['resultd']="1";
+		// 					}
+		// 				else
+		// 					{
+		// 						mysqli_rollback($conn);
+		// 						$jTableResult['msj']="  ERROR AL GUARDAR. INTENTE NUEVAMENTE.";
+		// 						$jTableResult['resultd']="0";
+		// 					}
+		// 		}
+        //     print json_encode($jTableResult);
+        // break;
 		case 'guardarCheckCompleto':
-            $jTableResult = array();
-            $jTableResult['msj']="";
-            $jTableResult['resultd']="";
-				if(($_POST['servicio']=="") or ($_POST['metodoRep'] =="") or ($_POST['codigoTorP'] ==0)){
-					$jTableResult['msj']="TIENES CAMPOS OBLIGATORIOS POR LLENAR";
-					$jTableResult['resultd']="0";
+			$jTableResult = array();
+			$jTableResult['msj'] = "";
+			$jTableResult['resultd'] = "";
+		
+			// Verificar si los campos obligatorios están llenos
+			if ($_POST['servicio'] == "" || $_POST['metodoRep'] == "" || $_POST['codigoTorP'] == 0) {
+				$jTableResult['msj'] = "TIENES CAMPOS OBLIGATORIOS POR LLENAR";
+				$jTableResult['resultd'] = "0";
+			} else {
+				// Crear consulta preparada
+				$query = $conn->prepare("INSERT INTO servicio (codigoVacaRep, fechaCelo, servido, metodoRep, numeroRegistroM, observacionesServ, idUsuario) VALUES (?, ?, ?, ?, ?, ?, ?)");
+		
+				// Vincular parámetros
+				$query->bind_param("isiiisi", $_POST['codVaca'], $_POST['fechCelo'], $_POST['servicio'], $_POST['metodoRep'], $_POST['codigoTorP'], $_POST['observacionesRep'], $_POST['idRespCelo']);
+		
+				// Ejecutar consulta preparada
+				if ($query->execute()) {
+					mysqli_commit($conn);
+					$jTableResult['msj'] = "DATO GUARDADO CORRECTAMENTE";
+					$jTableResult['resultd'] = "1";
+				} else {
+					mysqli_rollback($conn);
+					$jTableResult['msj'] = "ERROR AL GUARDAR. INTENTE NUEVAMENTE.";
+					$jTableResult['resultd'] = "0";
 				}
-				else{
-						$query="INSERT INTO servicio SET 
-						codigoVacaRep='".$_POST['codVaca']."',
-						fechaCelo='".$_POST['fechCelo']."',
-						servido='".$_POST['servicio']."',
-						metodoRep='".$_POST['metodoRep']."',
-						numeroRegistroM='".$_POST['codigoTorP']."',
-						observacionesServ='".$_POST['observacionesRep']."',
-						idUsuario='".$_POST['idRespCelo']."';";
-						if ($resultado=mysqli_query($conn,$query))
-							{
-								mysqli_commit($conn);
-								$jTableResult['msj']="  DATO GUARDADO CORRECTAMENTE";
-								$jTableResult['resultd']="1";
-							}
-						else
-							{
-								mysqli_rollback($conn);
-								$jTableResult['msj']="  ERROR AL GUARDAR. INTENTE NUEVAMENTE.";
-								$jTableResult['resultd']="0";
-							}
-				}
-            print json_encode($jTableResult);
-        break;
+		
+				// Cerrar consulta preparada
+				$query->close();
+			}
+			
+			print json_encode($jTableResult);
+		break;
 		
 		case 'eliminarRegistroCelo':
 			$jTableResult = array();
 			$jTableResult['msj'] = "";
 			$jTableResult['resultd'] = "";
 		
-			//$idCeloRepA = mysqli_real_escape_string($conn, $_POST['idCeloRepA']);
-			$query = "DELETE FROM servicio WHERE idReproduccion = '".$_POST['idCeloRepA']."';";
+			$query = $conn->prepare("DELETE FROM servicio WHERE idReproduccion = ?");
+			$query->bind_param("i", $_POST['idCeloRepA']);
 		
-			if (mysqli_query($conn, $query)) {
+			// Ejecutar consulta preparada
+			if ($query->execute()) {
 				mysqli_commit($conn);
 				$jTableResult['msj'] = "DATO ELIMINADO CORRECTAMENTE";
 				$jTableResult['resultd'] = "1";
@@ -821,6 +944,8 @@
 				$jTableResult['resultd'] = "0";
 			}
 		
+			// Cerrar consulta preparada
+			$query->close();
 			print json_encode($jTableResult);
 		break;
 		case 'eliminarRegistroPajilla':
@@ -828,9 +953,11 @@
 			$jTableResult['msj'] = "";
 			$jTableResult['resultd'] = "";
 		
-			//$idCeloRepA = mysqli_real_escape_string($conn, $_POST['idCeloRepA']);
-			$query = "DELETE FROM pajilla WHERE idPajilla = '".$_POST['datPajiId']."';";
-			if (mysqli_query($conn, $query)) {
+			$query = $conn->prepare("DELETE FROM pajilla WHERE idPajilla = ?");
+			$query->bind_param("i", $_POST['datPajiId']);
+		
+			// Ejecutar consulta preparada
+			if ($query->execute()) {
 				mysqli_commit($conn);
 				$jTableResult['msj'] = "DATO ELIMINADO CORRECTAMENTE";
 				$jTableResult['resultd'] = "1";
@@ -839,6 +966,9 @@
 				$jTableResult['msj'] = "ERROR AL ELIMINAR. INTENTE NUEVAMENTE. " . mysqli_error($conn);
 				$jTableResult['resultd'] = "0";
 			}
+		
+			// Cerrar consulta preparada
+			$query->close();
 		
 			print json_encode($jTableResult);
 		break;

@@ -92,8 +92,8 @@
 						</div>
 					</div>
 					
-					<div class="row" id="#listarCeos" style="margin-bottom: 1rem;">
-						<center><h5 id="Title_celos">Lista celos</h5></center>
+					<div class="row" id="#listarCeos" style="margin-bottom: 2rem;">
+						<center><h5 id="Title_celos">LISTA DE CELOS</h5></center>
 						<div class="d-flex justify-content-center flex-wrap">
 							<button type="button" name="listarMonta" id="listarMonta" class="btn btn-warning btn-md my-2 mx-2" data-toggle="modal" data-target="#">
 								Monta
@@ -109,9 +109,15 @@
 					<div id="listCel">
 
 					</div>
-					<div id="msjCel">
+					
+					<div id="msjCel" >
 
 					</div>
+					
+					<div id="msjbtnListar">
+
+					</div>
+					
 				</div>
 				<div class="modal-footer">
 					<div class="modal-footer">
@@ -172,7 +178,7 @@
 
 					<div class="row" id="divTlRepUpdate">
 				        <div class="col" >
-						    <center><h6 id="datosRepTituloUpdate" class="modal-title" ><strong> Datos del reproductor</strong></h6>  </center>							
+						    <center><h6 id="datosRepTituloUpdate" class="modal-title" ><strong>Datos del reproductor</strong></h6>  </center>							
 						</div>
 					</div>
 					<div class="row">
@@ -315,14 +321,14 @@
 					<div class="row">
 						<div class="col">
 							<h6 class="modal-title">Fecha Registro</h6>
-							<input id="fechaRegistroPA"  name="fechaRegistroPA" type="text" class="form-control"   value='<?php echo $fecha; ?>' readonly />
+							<input id="fechaRegistroPA"  name="fechaRegistroPA" type="text" class="form-control"   value='<?php echo $fecha; ?>'  />
 							<input  type="text" class="form-control" id="idPaUpdate" hidden>
 						</div>
 					</div>
 					<div class="row">
 						<div class="col" >
 							<h6 class="modal-title" >Numero de registro</h6>
-							<input  type="text" class="form-control" id="numeroRegistroRA" >
+							<input  type="text" class="form-control" id="numeroRegistroRA" readonly>
 						</div>
 					</div>
 					<div class="row">
