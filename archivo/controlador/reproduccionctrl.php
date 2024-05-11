@@ -363,7 +363,7 @@
 				raza.nombreRaza AS razaPajillaP 
 				FROM pajilla 
 				INNER JOIN raza
-				ON pajilla.razaPajilla = raza.idRaza;";
+				ON pajilla.razaPajilla = raza.idRaza ORDER BY `fechaRegistroP` DESC;";
 				$resultado = mysqli_query($conn, $query);
 				$numero = mysqli_num_rows($resultado);
 				$jTableResult['numTtPajillas']=$numero;
@@ -681,19 +681,22 @@
             print json_encode($jTableResult);
         break;
 		case 'actualizarPajilla':
+			//echo "al pajilla es actualizacion numero: ".$_POST['idRespUpdP'];
 			$jTableResult = array();
 				$jTableResult['msj']="";
 				$jTableResult['resultd']="";
 					$query=$conn->prepare("UPDATE pajilla SET fechaRegistroP = ?, 
 					numeroRegistro =  ?,
 					nombrePajilla = ?, 
-					razaPajilla = ?
+					razaPajilla = ?,
+					respRegPajilla = ?
 					WHERE idPajilla = ?");
-					$query->bind_param("sssii",
+					$query->bind_param("sssiii",
 					 $_POST['fechaRegPaUp'], 
 					 $_POST['numRegUpPa'], 
 					 $_POST['nombretUpd'], 
-					 $_POST['razSelPaUp'], 
+					 $_POST['razSelPaUp'],
+					 $_POST['idRespUpdP'],
 					 $_POST['datPajiIdU']);
 						if ($query->execute()){
 							mysqli_commit($conn);

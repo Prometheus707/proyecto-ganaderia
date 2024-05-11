@@ -150,7 +150,7 @@ $(function(){
 
 	$(document).on("click",'#btnUpdateCelo', function(){
 		
-		if($("#selectServidoUpdate").val()=="0"){ alertify.error("Debe seleccionar si esta servido o no");	}
+		if($("#selectServidoUpdate").val()=="0"){ alertify.error("TIENES CAMPOS OBLIGATORIOS POR LLENAR");	}
 		if($("#selectServidoUpdate").val()=="1")
 		{
 			idCeloFormUpdateUp = $("#idCeloBdUpdate").val();
@@ -197,7 +197,7 @@ $(function(){
 		
 			idCeloFormUpdate = $("#idCeloBdUpdate").val();
 			//alertify.success("no esta servidddppdpdpdpd");  
-			alertify.success("el id del celo de no servido es: "+idCeloFormUpdate)    
+			//alertify.success("el id del celo de no servido es: "+idCeloFormUpdate)    
 			$("#selectMetodosUpdate option[value=0]").attr("selected",true);
 			$.post("../controlador/reproduccionctrl.php", {
 				action:'actualizarCheck',
@@ -266,8 +266,8 @@ $(function(){
 					}		
 
 				}else{
-					$("#msjbtnListar").show();
-					$("#msjbtnListar").html("<center><h6>NO HAY REGISTRO</h6></center>");
+					// $("#msjbtnListar").show();
+					// $("#msjbtnListar").html("<center><h6>NO HAY REGISTRO</h6></center>");
 					eliminarTablaCelo();
 				}
 				
@@ -292,8 +292,8 @@ $(function(){
 						alertify.error(data.msj); 
 					}		
 				}else{
-					$("#msjbtnListar").show();
-					$("#msjbtnListar").html("<center><h6>NO HAY REGISTRO</h6></center>");
+					// $("#msjbtnListar").show();
+					// $("#msjbtnListar").html("<center><h6>NO HAY REGISTRO</h6></center>");
 					eliminarTablaCelo();
 				}
 				
@@ -319,8 +319,8 @@ $(function(){
 						alertify.error(data.msj); 
 					}		
 				}else{
-					$("#msjbtnListar").show();
-					$("#msjbtnListar").html("<center><h6>NO HAY REGISTRO</h6></center>");
+					// $("#msjbtnListar").show();
+					// $("#msjbtnListar").html("<center><h6>NO HAY REGISTRO</h6></center>");
 					eliminarTablaCelo();
 				}
 				
@@ -346,8 +346,8 @@ $(function(){
 				}
 				else{
 					
-					$("#msjbtnListar").hide(200);
-					$("#msjbtnListar").empty();
+					// $("#msjbtnListar").hide(200);
+					// $("#msjbtnListar").empty();
 					$('#listarMonta').hide(500);
 					$('#listarInseminacion').hide(500);
 					$('#Title_celos').hide(500);
@@ -501,14 +501,14 @@ $(function(){
 	$(document).on("change", "#razaListaPajilla",function () {
 		// alert($(this).val())
 		var idRz = $("#razaListaPajilla").val();
-		alertify.success(idRz);
+		//alertify.success(idRz);
 		$("#idRazaP").val(idRz);
 		
 	});
 	$(document).on("change", "#razaListaPajillaA",function () {
 		//alert($(this).val())
 		var idRz = $(this).val();
-		alertify.success(idRz);
+		//alertify.success(idRz);
 		$("#idRazaPA").val(idRz);
 		
 	});
@@ -767,6 +767,7 @@ $(function(){
 			action:'actualizarPajilla',
 			fechaRegPaUp : $("#fechaRegistroPA").val(),
 			datPajiIdU : datPajiIdU,
+			idRespUpdP:$("#idUsuRegistroCel").val(),
 			numRegUpPa: $("#numeroRegistroRA").val(),
 			nombretUpd:$("#nombreToroRA").val(),
 			razSelPaUp:$("#idRazaPA").val()
@@ -790,7 +791,7 @@ $(function(){
 	////////////////////////////////////////////////////////////////////////
 	$(document).on("click", "#btnguardarCelo",function (){
 		
-		if($("#selectServido").val()=="0"){ alertify.error("Debe seleccionar si esta servido o no");	}
+		if($("#selectServido").val()=="0"){ alertify.error("TIENES CAMPOS OBLIGATORIOS POR LLENAR");	}
 		if($("#selectServido").val()=="1")
 		{
 			$.post("../controlador/reproduccionctrl.php", {
