@@ -118,7 +118,7 @@ $fecha = date("Y-m-d");
 						</ul>
 						<ul class="nav nav-treeview">
 							<li class="nav-item">
-								<a href="tableroVista.php" class="nav-link active" style="cursor:pointer;" title='Salir'>
+								<a href="tableroAlertasCopy.php" class="nav-link active" style="cursor:pointer;" title='Salir'>
 									<i class="fa fa-window-close"></i>
 									<p>&nbsp;&nbsp;Tablero</p>
 								</a>

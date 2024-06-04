@@ -1,0 +1,159 @@
+/* Normalización de CSS */
+html,
+body,
+ul,
+ol {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, sans-serif; /* Define una fuente predeterminada */
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  line-height: 1.5; /* Espaciado de línea predeterminado */
+  height: 100vh;
+  background-color: #DFE7D3;
+}
+
+/* Corrige el espaciado de línea en los elementos listados */
+ul,
+ol {
+  list-style: none; /* Quita los marcadores de lista predeterminados */
+}
+
+/* Asegura que las imágenes se comporten de forma predeterminada */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Normaliza los márgenes de los elementos de encabezado */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+}
+
+/* Normaliza el tamaño de fuente en los elementos de encabezado */
+h1 {
+  font-size: 2em;
+}
+
+h2 {
+  font-size: 1.5em;
+}
+
+h3 {
+  font-size: 1.17em;
+}
+
+h4 {
+  font-size: 1em;
+}
+
+h5 {
+  font-size: 0.83em;
+}
+
+h6 {
+  font-size: 0.67em;
+}
+
+/* Otros estilos de normalización según sea necesario */
+.headerTablero{
+  display: grid;
+  place-items: center;
+  background-color: #39A900;
+  width: 100%;
+  height:8%;
+  border-bottom-left-radius: 0.5rem;
+  border-bottom-right-radius: 0.5rem;
+  box-shadow:4px 5px 5px rgba(0, 0, 0, 0.22);
+}
+.titleTablero{
+    color: white;
+}
+.mainTabR{
+  display: grid;
+  grid-template-columns: 4fr 1fr;
+  grid-template-rows: auto;
+  /*justify-content: space-between;*/
+  width: 100%;
+  height: 100%;
+}
+.tabla{
+  padding: 0.5rem;
+  padding-bottom: 0;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+
+}
+.alertas{      
+  display: flex;
+  flex-direction: column;
+  padding-right: 0.8rem;
+  padding-left: 0.8rem;
+  padding-top: 0.5rem;
+  height: 100%;
+}
+.nomAlert{
+  color: #39A900;
+  font-weight: bold;
+  font-size:1.5rem;
+}
+.alertasCard{
+  display: flex;
+  flex-direction: column;
+  height: 91%;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.22);
+  border-radius: 1rem;
+}
+.containerTabla{
+  width: 100%;
+  height: 100%; 
+
+}
+.table-responsive{
+  display: flex;
+  flex-direction: column;
+  height: 91%;
+  overflow-y: auto; 
+  /*overflow-y: scroll;*/
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.22);
+}
+.headNmaeR{
+  background-color: #39A900;
+}
+.nomHead{
+  color: white;
+}
+
+/*min-width: 1540px mi pc*/
+/* @media (min-width: 1590px) {
+    .titleTablero{
+      color: blue;
+  }
+  .table-responsive{
+    height: 750px;
+  }
+} */
+
+@media (min-width: 1517px) {
+
+.table-responsive{
+  height: 780px;
+}
+}
+
+
+
+
+

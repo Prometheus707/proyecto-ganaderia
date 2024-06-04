@@ -700,11 +700,11 @@
 					 $_POST['datPajiIdU']);
 						if ($query->execute()){
 							mysqli_commit($conn);
-							$jTableResult['msj']="  DATO GUARDADO CORRECTAMENTE";
+							$jTableResult['msj']="  DATO ACTUALIZADO CORRECTAMENTE";
 							$jTableResult['resultd']="1";
 						} else {
 							mysqli_rollback($conn);
-							$jTableResult['msj']="  ERROR AL GUARDAR. INTENTE NUEVAMENTE.";
+							$jTableResult['msj']="  ERROR AL ACTUALIZAR. INTENTE NUEVAMENTE.";
 							$jTableResult['resultd']="0";
 						}
 					$query -> close();
@@ -752,9 +752,9 @@
 				}
 				else{
 
-					$query=$conn->prepare("INSERT INTO servicio (codigoVacaRep, fechaCelo, servido, observacionesServ, idUsuario) VALUES (?, ?, ?, ?, ?)");
+					$query=$conn->prepare("INSERT INTO servicio (codigoVacaRep, fechaCelo, servido, observacionesServ, idUsuario, fechaRegistroServ) VALUES (?, ?, ?, ?, ?, ?)");
 
-					$query ->bind_param("isssi", $_POST['codVaca'], $_POST['fechCelo'], $_POST['servicio'], $_POST['observacionesRep'], $_POST['idRespCelo']);
+					$query ->bind_param("isssis", $_POST['codVaca'], $_POST['fechCelo'], $_POST['servicio'], $_POST['observacionesRep'], $_POST['idRespCelo'], $_POST['fechRegistroCelo']);
 
 					if ($query -> execute())
 						{
@@ -905,10 +905,10 @@
 				$jTableResult['resultd'] = "0";
 			} else {
 				// Crear consulta preparada
-				$query = $conn->prepare("INSERT INTO servicio (codigoVacaRep, fechaCelo, servido, metodoRep, numeroRegistroM, observacionesServ, idUsuario) VALUES (?, ?, ?, ?, ?, ?, ?)");
+				$query = $conn->prepare("INSERT INTO servicio (codigoVacaRep, fechaCelo, servido, metodoRep, numeroRegistroM, observacionesServ, idUsuario, fechaRegistroServ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
 		
 				// Vincular parámetros
-				$query->bind_param("isiiisi", $_POST['codVaca'], $_POST['fechCelo'], $_POST['servicio'], $_POST['metodoRep'], $_POST['codigoTorP'], $_POST['observacionesRep'], $_POST['idRespCelo']);
+				$query->bind_param("isiiisis", $_POST['codVaca'], $_POST['fechCelo'], $_POST['servicio'], $_POST['metodoRep'], $_POST['codigoTorP'], $_POST['observacionesRep'], $_POST['idRespCelo'], $_POST['fechRegistroCelo']);
 		
 				// Ejecutar consulta preparada
 				if ($query->execute()) {

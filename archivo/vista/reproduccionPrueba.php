@@ -17,6 +17,7 @@
 					</div>				
 					<div class="row">
 						<div class="col-lg-6">
+							<input id="fechaRegistroCeloVaca"  name="fechaCeloVaca" type="hidden" class="form-control"   value='<?php echo $fecha; ?>' readonly />
 							<h6 class="modal-title">Fecha de celo</h6>
 							<input id="fechaCeloVaca"  name="fechaCeloVaca" type="text" class="form-control"   value='<?php echo $fecha; ?>' readonly />
 							<input type="hidden" class="form-control" id="idUsuRegistroCel" name="idUsuRegistroCel" value='<?php echo $_SESSION['id_Usu']; ?>'  title='idUsu' >
@@ -92,16 +93,16 @@
 						</div>
 					</div>
 					
-					<div class="row" id="#listarCeos" style="margin-bottom: 2rem;">
+					<div class="row" id="listarCeos" style="margin-bottom: 2rem;">
 						<center><h5 id="Title_celos">LISTA DE CELOS</h5></center>
 						<div class="d-flex justify-content-center flex-wrap">
-							<button type="button" name="listarMonta" id="listarMonta" class="btn btn-warning btn-md my-2 mx-2" data-toggle="modal" data-target="#">
+							<button type="button" name="listarMonta" id="listarMonta" class="btn btn-warning btn-md my-2 mx-2" data-toggle="modal" data-target="">
 								Monta
 							</button>
-							<button type="button" name="listarInseminacion" id="listarInseminacion" class="btn btn-warning btn-md my-2 mx-2" data-toggle="modal" data-target="#">
+							<button type="button" name="listarInseminacion" id="listarInseminacion" class="btn btn-warning btn-md my-2 mx-2" data-toggle="modal" data-target="">
 								Inseminacion
 							</button>
-							<button type="button" name="listarCelosNo" id="listarCelosNo" class="btn btn-warning btn-md my-2 mx-2" data-toggle="modal" data-target="#">
+							<button type="button" name="listarCelosNo" id="listarCelosNo" class="btn btn-warning btn-md my-2 mx-2" data-toggle="modal" data-target="">
 								No servido
 							</button>
 						</div>
@@ -243,7 +244,7 @@
 				</div>
 				<div class="modal-footer">
 					<div class="modal-footer">
-					<button type="button" class="btn btn-primary"  id="btnUpdateCelo" >GUARDAR</button>
+					<button type="button" class="btn btn-primary"  id="btnUpdateCelo" >ACTUALIZAR</button>
 					<button type="button" class="btn btn-danger"   id="btnCerrarUpdateCerlo" data-dismiss="modal">CERRAR</button>
 					</div>
 				</div>

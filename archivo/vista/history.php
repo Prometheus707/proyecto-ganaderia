@@ -24,6 +24,7 @@ $fechaReg = date("Y-m-d h:m");
 		<script src="../../herramientas/js/perdidaJS.js" type="text/javascript" ></script>
 		<script src="../../herramientas/js/chqueoJS.js" type="text/javascript" ></script>
 		<script src="../../herramientas/js/camaraJS.js" type="text/javascript" ></script>
+		<script src="../../herramientas/js/tableroJS.js"></script>
 		
 	</head>
 	<body class="hold-transition sidebar-mini layout-fixed">
