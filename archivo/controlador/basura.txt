@@ -1,8 +1,0 @@
-               /////////////////////////BUSCAR LA RAZA/////////////////////////
-               
-				$query=" SELECT nombreRaza from raza where idRaza='".$jTableResult['idnombreRazaHistorial']."';"; // cambiar el nombre de la tabla y los campos de la tabla
-				$resultado = mysqli_query($conn, $query);
-				while($registro = mysqli_fetch_array($resultado))
-					{
-						$jTableResult['nombreRazaHistorial']=$registro['nombreRaza']; //cambiar datos por los de la tabla
-					}		

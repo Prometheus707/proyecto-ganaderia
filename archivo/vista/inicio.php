@@ -9,12 +9,11 @@ session_start();
 if (isset($_SESSION['id_Usu'])){	
 $fecha = date("Y-m-d"); 
 $fecha_Banner = date("Y-m-d"); ?>
-
 <html>
 	<head>
 		<title>RUPS</title>
 		<script src='https://kit.fontawesome.com/459929adcc.js' crossorigin='anonymous'></script>
-		<?php include('head.php');?>	
+		<?php include('head.php');?>
 	</head>
 	<body class="hold-transition sidebar-mini layout-fixed">
 		<?php include('cabeceraMenu.php');?>

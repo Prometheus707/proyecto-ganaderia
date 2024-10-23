@@ -3,20 +3,49 @@
 include('../../include/parametros_index.php'); 
 date_default_timezone_set('America/Bogota');
 $fecha = date("Y-m-d");
+//include("../vista/updateUsuario.php");
 ?>
 <div class="wrapper">
 	<nav class="main-header navbar navbar-expand navbar-light">
-		<ul class="navbar-nav">
-			<li class="nav-item d-none d-sm-inline-block ">
-				<li class="nav-item active">
-					<a class="nav-link" data-widget="pushmenu" href="#" role="button">
-						<i class="fa fa-list" aria-hidden="true"></i>
-					</a>
-				</li>
-				<a class="nav-link active"><h6>RESGITRO DE UNIDADES PRODUCTIVAS - <?php echo utf8_decode($_SESSION['usuario_Logeado'])." - ".utf8_decode($_SESSION['nombre_rol']); ?></h6></a>
-			</li>
-		</ul>
-	</nav>	
+    <div class="container-fluid">
+        <ul class="navbar-nav w-100 justify-content-between align-items-center">
+            <li class="nav-item">
+                <a class="nav-link" data-widget="pushmenu" href="#" role="button">
+                    <i class="fa fa-list" aria-hidden="true"></i>
+                </a>
+            </li>
+			<!-- <li class="nav-item dropdown">
+				<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">
+					<i class="fa-regular fa-user"></i>
+				</a>
+                <div class="dropdown-menu dropdown-menu-end p-3" style="margin-right: -100px;">
+                    <div class="text-center mb-3">
+                        <img src="https://definicion.de/wp-content/uploads/2019/07/perfil-de-usuario.png" class="img-thumbnail rounded-circle" style="width: 80px; height: 80px; object-fit: cover;" alt="Foto usuario">
+                    </div>
+                    <div class="text-center">
+                        <p class="mb-1"><?php //echo $_SESSION['nombre_rol'] ?></p>
+                        <p class="mb-2"><?php //dsxxecho $_SESSION['usuario_Logeado'] ?></p>
+                        <div class="d-flex justify-content-center">
+                            <button class='btn btn-warning btn-sm me-2' id='btnActualizarUsuario' data-toggle='modal' data-target='#updateUser' title="Actualizar">
+                                <i class='fa-solid fa-pen-to-square'></i>
+                            </button>
+                            <button class='btn btn-danger btn-sm' title="Salir al inicio">
+                                <a href="../../include/ctrlindex.php?action=salir" class="text-white">
+                                    <i class="fa-solid fa-right-from-bracket fa-rotate-180"></i>
+                                </a>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </li> -->
+            <li class="nav-item flex-grow-1 text-start">
+                <a class="nav-link active">
+                    <h6 class="mb-0">GANADERIA LA PALMA</h6>
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>
 	<aside class="main-sidebar sidebar-light-primary elevation-4">
 		<!-- Brand Logo -->
 		<a class="brand-link">
@@ -26,7 +55,6 @@ $fecha = date("Y-m-d");
 		</a>
 		<div class="sidebar">
 			<br>
-			<!--  <a class="brand-link"><center><h5>SIA</h5></center></a>  -->
 			<nav class="mt-0">
 				<ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 					<li class="nav-item ">
@@ -62,35 +90,33 @@ $fecha = date("Y-m-d");
 								</a>
 							</li>
 						</ul>
+						<ul class="nav nav-treeview">
+							<li class="nav-item">
+								<a href="actualizarUsuario.php" id="pagActualizarUsu" class="nav-link ">
+									<i class="fa fa-user-circle-o"></i>
+									<p>Actualizar usuario</p>
+								</a>
+							</li>
+						</ul>
 					</li>
 					<li class="nav-item has-treeview active">
 						<a href="#" class="nav-link bg-warning active"> <!--  GEEEN -->
 							<i class="fa fa-user-circle-o" aria-hidden="true"></i>
 							<p>&nbsp;&nbsp;&nbsp;Unidades<i class="right fa fa-sort"></i></p>
 						</a>
-						<!--
-						<ul class="nav nav-treeview">
-							<li class="nav-item">
-								<a href="dieta|.php" class="nav-link ">
-									<i class="fa fa-check-square-o" aria-hidden="true"></i>
-									<p>Dieta</p>
-								</a>
-							</li>
-						</ul>						
-						<ul class="nav nav-treeview">
-							<li class="nav-item">
-								<a href="raza.php" class="nav-link ">
-									<i class="fa fa-check-square-o" aria-hidden="true"></i>
-									<p>Raza</p>
-								</a>
-							</li>
-						</ul>
-						-->
 						<ul class="nav nav-treeview">
 							<li class="nav-item">
 								<a href="unidades.php" class="nav-link ">
 									<i class="fa fa-user-circle-o"></i>
 									<p>Unidad</p>
+								</a>
+							</li>
+						</ul>
+						<ul class="nav nav-treeview">
+							<li class="nav-item">
+								<a href="areass.php" class="nav-link " >
+									<i class="fa fa-user-circle-o"></i>
+									<p>Area</p>
 								</a>
 							</li>
 						</ul>

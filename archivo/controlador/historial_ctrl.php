@@ -51,7 +51,7 @@ switch ($_REQUEST['action'])
 				
 			print json_encode($jTableResult);
 		break;
-		case 'listarAnimales':
+		case 'listarAnimalesHistory':
 			$jTableResult = array();
 				$jTableResult['msj']="";
 				$jTableResult['result']="";
@@ -64,7 +64,7 @@ switch ($_REQUEST['action'])
 				WHERE ( animales.codAnimal 	like '".$var_dato."' 
 				OR animales.nombreAnimal 	like '".$var_dato."' 
 				OR unidades.nombreUnidadPro like '".$var_dato."' )  
-				AND animales.estadoVM='".$varEstadoVM."' AND idSexo = 0;";				
+				AND animales.estadoVM='".$varEstadoVM."' AND idSexo = 2;";				
 				$resultado = mysqli_query($conn, $query);
 				$numero = mysqli_num_rows($resultado);
 				if($numero==0){

@@ -19,10 +19,10 @@ $fecha = date("Y-m-d");
 		<link   rel='stylesheet' href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700' >
 		<link 	rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css' integrity='sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT' crossorigin='anonymous'>
 		<script src='herramientas/js/indexJS-01.js' type='text/javascript' ></script>		
+		<!-- <script src='herramientas/js/pruebaGeneral.js' type='text/javascript' ></script>		 -->
 		<script type='text/javascript' src='herramientas/lib/alertify.js'></script>
 		<link   rel='stylesheet' href='herramientas/alertify.js/alertify.core.css' />
 		<link   rel='stylesheet' href='herramientas/alertify.js/alertify.default.css' />
-		
 	</head>
 	<body class='hold-transition login-page'>
 		<div class="container"> 
@@ -46,7 +46,7 @@ $fecha = date("Y-m-d");
 								</div>
 								<div class="row mt-1">
 									<div class="col">
-										<input type="number" class="form-control"  placeholder="Identificacion" id="identificacion_registro" title="Identificacion del usuario" onkeypress='return validaNumericos(event)' >
+										<input type="text" class="form-control"  placeholder="Identificacion" id="identificacion_registro" title="Identificacion del usuario" onkeypress='return validaNumericos(event)' >
 									</div>
 								</div>
 								<div class="row mt-1">
@@ -69,14 +69,37 @@ $fecha = date("Y-m-d");
 										<input type="email" class="form-control" placeholder="Correo Electronico" id="correo_registro" name="correo_registro" title="Correo personal del usuario">
 									</div>
 								</div>												
+								<div class='row  mt-1'>
+									<div class="col">
+										<select class="form-select" id="slctRegionalUsuario" aria-label="Default select example">
+							
+										</select>
+										<input type="text" id="idReginalUsu" hidden>
+									</div>
+								</div>
+								<div class='row  mt-1'>
+									<div class="col">
+										<select class="form-select" id="slctCentroUsuario" aria-label="Default select example">
+							
+										</select>
+										<input type="text" id="idCentroUsu" hidden>
+									</div>
+								</div>
+								<div class='row  mt-1'>
+									<div class="col">
+										<select class="form-select" id="areaUsu" aria-label="Default select example">
+							
+										</select>
+										<input type="text" id="idAreaUsu" hidden ">
+									</div>
+								</div>
 								<div class="row mt-1">									
 									<div class="col">
 										<input type="password" class="form-control" placeholder="Clave" id="clave_registro" name="clave_registro" title="Clave unica creada por el usuario">
 									</div>
 								</div>
 								<div class='row' class="col-sm-10 text-center">
-									<div id='divRespuestasRegistoUsu' class="col-sm-12 text-center" class='col-20' >
-									</div>
+									<div id='divRespuestasRegistoUsu' class="col-sm-12 text-center" class='col-20' ></div>
 								</div>
 								<br>
 							</div>

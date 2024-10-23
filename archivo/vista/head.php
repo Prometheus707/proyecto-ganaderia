@@ -77,15 +77,4 @@
 <!--  cierre upload --->
 
 
-<!-- gigo  --->
-<!-- jQuery -->
-<link 	href="../../herramientas/librerias/gijgo/css/gijgo.css" rel="stylesheet" />
-<script src="../../herramientas/librerias/jquery/jquery.min.js" type="text/javascript"></script>
-<script src="../../herramientas/librerias/jquery-ui/jquery-ui.min.js" type="text/javascript"></script>	
 
-<!-- Bootstrap 4 -->
-<script src="../../herramientas/librerias/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="../../herramientas/librerias/gijgo/js/gijgo.min.js" type="text/javascript"></script>	
-<script src="../../herramientas/librerias/gijgo/js/messages/messages.es-es.min.js" type="text/javascript"></script>
-<!-- gigo  --->
-<!--   --->

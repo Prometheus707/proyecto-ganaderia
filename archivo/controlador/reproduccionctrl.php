@@ -48,7 +48,6 @@
 				$jTableResult['metodoRepUp']="";
 				$jTableResult['numeroRegistroMUpda']="";
 				$jTableResult['observacionesServUp']="";
-
 				if($idTipoCeloUpdate == 1 or $idTipoCeloUpdate == 2 ){
 					$jTableResult['fechaCeloUp']="";
 					$jTableResult['servidoUp']="";
@@ -83,9 +82,6 @@
 					}
 			print json_encode($jTableResult);
 		break;
-
-
-
 		//arrelo lista de tarjetas que se muestran de con boton monta
 		case 'arregloMonta':
 				$jTableResult = array();
@@ -580,7 +576,7 @@
 				if($_POST['tipoEnsiminacion']==1){
 					$jTableResult['tipo']="";
 					$jTableResult['tipo']="<option value='0' selected >seleccione:.</option>";
-					$query="SELECT idAnimal, codAnimal from animales WHERE idSexo = 1;"; // cambiar el nombre de la tabla y los campos de la tabla
+					$query="SELECT idAnimal, codAnimal from animales WHERE idSexo = 1 AND DesarrolloAnimal_FK=9;"; // cambiar el nombre de la tabla y los campos de la tabla
 					$resultado = mysqli_query($conn, $query);
 					while($registro = mysqli_fetch_array($resultado))
 						{
@@ -973,6 +969,90 @@
 			// Cerrar consulta preparada
 			$query->close();
 		
+			print json_encode($jTableResult);
+		break;
+		case 'buscarFechaUltimParto':
+			$jTableResult = array();
+			$jTableResult['ultimoPartoAnimal'] = "";
+			$query = $conn -> prepare("SELECT idVacunacion, fechaVacunacion
+										FROM vacunacion
+										WHERE idAnimalVacunacion =?
+										AND fechaVacunacion = (
+											SELECT MAX(fechaVacunacion)
+											FROM vacunacion
+										)
+										ORDER BY idVacunacion DESC
+										LIMIT 1;");
+			$query -> bind_param('i', $_POST['idAnimalUltParto']);
+			if($query -> execute()){
+				$resultado = $query -> get_result();
+				$numeroUltimoParto = $resultado -> num_rows;
+				if($numeroUltimoParto>0){
+					$fechaUltimParto = $resultado -> fetch_assoc();
+					$jTableResult['ultimoPartoAnimal'] = $fechaUltimParto['fechaVacunacion'];
+					$jTableResult['resultd'] ="1";
+				}else{
+					$jTableResult['ultimoPartoAnimal'] = "SIN VACUNAS";
+					$jTableResult['resultd'] ="0";
+
+				}
+			}
+			print json_encode($jTableResult);
+		break;
+		
+		case 'listarVacunacionesAnim':
+			$jTableResult = array();
+			$jTableResult['tabsVacunacionAnim'] = "";
+			$jTableResult['numeroFilas'] = "";
+			$var_dato_Vacuna = $_POST['idAnimalListVacun'];
+			$query = "SELECT idVacunacion, fechaVacunacion, vacunas.nombreVacuna AS nombre_vacunaV
+										FROM vacunacion
+										INNER JOIN vacunas ON vacunacion.nombreVacuna=vacunas.idVacuna
+										WHERE idAnimalVacunacion = '".$var_dato_Vacuna."'
+										ORDER BY fechaVacunacion DESC, idVacunacion DESC;";
+			$resultado = mysqli_query($conn, $query);
+			$numero = mysqli_num_rows($resultado);
+			$jTableResult['numeroFilas'] = $numero;
+			$jTableResult['tabsVacunacionAnim'] .= "<div class='card'>
+								<div class='card-header' style='background-color:$varCabeceraTabla; color: white;'>
+									<h5 class='card-title'>VACUNAS APLICADAS</h5>
+									<div class='d-flex justify-content-end align-items-center'>   
+										<p>total: <strong>$numero</strong></p>
+									</div>
+								</div>
+								<div class='card-body' style='max-height: 400px; overflow-y: auto;'>";
+			if($numero > 0) {
+				while($registro = mysqli_fetch_array($resultado)) { 
+					$jTableResult['tabsVacunacionAnim'] .= "<div class='card mb-10'>
+														<div class='card-body'>
+															<div class='row'>
+																<div class='col-sm-3' >
+																	<h6 class='modal-title font-weight-bold'>Fecha: </h6>
+																</div>	
+																<div class='col-sm-4'>
+																	<h6 class='modal-title'>".$registro['fechaVacunacion']."</h6>
+																</div>                                               
+															</div>                 
+															<div class='row'>
+																<div class='col-sm-3' >
+																	<h6 class='modal-title font-weight-bold'>Vacuna: </h6>
+																</div>	
+																<div class='col-sm-4'>
+																	<h6 class='modal-title'>".$registro['nombre_vacunaV']."</h6>
+																</div>                                               
+															</div>                 
+														</div>
+													</div>";
+				}
+			} else {
+				$jTableResult['tabsVacunacionAnim'] .= "<div class='card mb-10'>
+													<div class='card-body'>
+														<center><h6>NO SE ENCONTRARON RESULTADOS</h6></center>                
+													</div>
+												</div>";
+			}
+			$jTableResult['tabsVacunacionAnim'] .= "    </div>
+											</div>";
 			print json_encode($jTableResult);
 		break;
 	}		

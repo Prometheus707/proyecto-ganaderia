@@ -64,12 +64,7 @@
               </div>
            </div>
        </div>
-       <div class="alertas">
-            <center><p class="nomAlert">ALERTAS</p></center>
-            <div class="alertasCard">
-                <button type="button" ></button>
-            </div>
-       </div>
+     
     </main>
 </body>
 </html>

@@ -16,14 +16,29 @@
 						</div>
 					</div>				
 					<div class="row">
-						<div class="col-lg-6">
+						<div class="col-lg-12">
 							<input id="fechaRegistroCeloVaca"  name="fechaCeloVaca" type="hidden" class="form-control"   value='<?php echo $fecha; ?>' readonly />
 							<h6 class="modal-title">Fecha de celo</h6>
 							<input id="fechaCeloVaca"  name="fechaCeloVaca" type="text" class="form-control"   value='<?php echo $fecha; ?>' readonly />
 							<input type="hidden" class="form-control" id="idUsuRegistroCel" name="idUsuRegistroCel" value='<?php echo $_SESSION['id_Usu']; ?>'  title='idUsu' >
 							<input type="hidden" class="form-control" id="nombreUsuRegistroCel" name="nombreUsuRegistro" value='<?php echo $_SESSION['usuario_Logeado']; ?>' >
 						</div>
-						<div class="col-lg-6">
+					</div>
+					<div class="row">
+						<div class="col">
+							<h6 class="modal-title">Ultima vacunacion</h6>
+							<input id="fechaUltimaVacuna"  name="fechaUltimaVacuna" type="text" class="form-control"   value='' readonly />
+						</div>
+						<div class="col">
+							<div id='divModalVisualizarVacunas' >
+								<h6 class="modal-title">&nbsp;&nbsp;</h6>
+								<button type="button" id="btnVisualizarVacunas" name="btnVisualizarVacunas" <?php echo $var_class_button_formulario; ?> data-toggle="modal" data-target="#mdVisualizarVacunas">
+								<i class="fa-solid fa-syringe"></i></button>
+							</div>
+						</div>	
+					</div>
+					<div class="row">
+						<div class="col-lg-12">
 							<h6 class="modal-title">Servido</h6> 
 							<select  id="selectServido" name="selectServido" class="form-control">
 								<option value="0">Seleccione</option>
@@ -44,7 +59,6 @@
 							</div>
 						</div>
 					</div>
-
 					<div class="row" id="divTlRep">
 				        <div class="col" >
 						    <center><h6 id="datosRepTitulo" class="modal-title" ><strong> Datos del reproductor</strong></h6>  </center>							
@@ -92,7 +106,6 @@
 							</div> 
 						</div>
 					</div>
-					
 					<div class="row" id="listarCeos" style="margin-bottom: 2rem;">
 						<center><h5 id="Title_celos">LISTA DE CELOS</h5></center>
 						<div class="d-flex justify-content-center flex-wrap">
@@ -201,14 +214,6 @@
 							</div>
 						</div>
 					</div>
-					<!-- <div class="row" id="divBtnPajilla" style="margin-bottom: 2rem;">
-					    <div class="d-flex justify-content-center">
-							<div class="col-lg-8" >
-								<button type="button" name="btnPajila" id="btnPajila" class="btn btn-block btn-warning btn-sm btn-sm; cursor:pointer;" data-toggle="modal" data-target="#addPajilla" >
-								<i class="fa fa-registered" aria-hidden="true"></i>Pajilla</button>
-							</div>
-						</div>
-					</div> -->
 					<div class="row" >
 						<div class="col-lg-6" id="responsableRUpdate" hidden>
 							<h6 class="modal-title">Responsable</h6> 
@@ -224,23 +229,6 @@
 							</div> 
 						</div>
 					</div>
-					<!-- <div class="row" id="#listarCeos" style="margin-bottom: 1rem;">
-						<center><h5 id="Title_celos">Lista celos</h5></center>
-						<div class="d-flex justify-content-center flex-wrap">
-							<button type="button" name="listarMonta" id="listarMonta" class="btn btn-warning btn-md my-2 mx-2" data-toggle="modal" data-target="#">
-								Monta
-							</button>
-							<button type="button" name="listarInseminacion" id="listarInseminacion" class="btn btn-warning btn-md my-2 mx-2" data-toggle="modal" data-target="#">
-								Inseminacion
-							</button>
-							<button type="button" name="listarCelosNo" id="listarCelosNo" class="btn btn-warning btn-md my-2 mx-2" data-toggle="modal" data-target="#">
-								No servido
-							</button>
-						</div>
-					</div>
-					<div id="listCel">
-
-					</div> -->
 				</div>
 				<div class="modal-footer">
 					<div class="modal-footer">
@@ -306,8 +294,6 @@
 			</div>
 		</div>
 	</div>
-
-
 	<!-----------------------------------------ACTUALIZAR PAJILLA------------------------------------------->
 	<div id="actualizarPajilla" class="modal fade" role="dialog" > 
 			<div class="modal-dialog modal-dialog-scrollable">
@@ -353,6 +339,27 @@
 							<button type="button" class="btn btn-danger" data-dismiss="modal" id="cerrarPajillaActu">CERRAR</button>
 						</div>
 					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-----------------------------------------VIZUALIZACION VACUNAS------------------------------------------->
+	<div id="mdVisualizarVacunas" class="modal fade" role="dialog"> 
+			<div class="modal-dialog modal-dialog-scrollable">
+			<div class="modal-content">
+				<!-- inicio cabecera del diálogo -->
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">X</button>
+				</div>
+				<!-- el cuerpo del modal -->
+				<div class="modal-body">
+					<div class="row">
+						<div class="col" >
+							<div id="cardVisualizacionVacunas">
+								
+							</div>
+						</div>
+					</div> 
 				</div>
 			</div>
 		</div>

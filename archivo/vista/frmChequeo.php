@@ -11,8 +11,6 @@
                         <div class="modal-header modal-header-imline">
                             <h4 class="modal-title mr-5" id="exampleModalLabel">
                                 Registrar Chequeo
-                                <h4 for="mail" class="form-label mr-2">Vaca</h4>
-                                <input type="email" class="form-control col-md-2" id="codAnimalBuscadoCheq" name="codAnimalBuscado" readonly>
                             </h4>
                             <button type="button" id="cerrarForm" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true" >X</span>
@@ -24,28 +22,16 @@
 
                                 <form class="row g-3">
                                     <div class="col-md-4" hidden>
-                                        <input type="text" class="form-control" id="idVacaCheq" name="CodVaca" hidden>
+                                        <input type="text" class="form-control" id="idVacaCheq" name="CodVaca" >
                                         <label for="mail" class="form-label" hidden>Codigo vaca</label>
                                         <input type="email" class="form-control" id="codAnimalBuscado" name="codAnimalBuscado" hidden>
                                     </div>
-                                    <!-- <div class="col-md-4" hidden>
-                                        <label for="clave" class="form-label">Nombre de la vaca</label>
-                                        <input type="text" class="form-control" id="nameVacaCheq" name="nameVaca">
-                                    </div>
-                                    <div class="col-md-4" hidden>
-                                        <input type="text" class="form-control" id="idRazaCheq" placeholder="" hidden>
-                                        <label for="direccion" class="form-label">Raza de la vaca</label>
-                                        <input type="text" class="form-control" id="razaVacaCheq" placeholder="">
-                                    </div> -->
-                                
-                                    
-
-                                    <div class="col-md-4">
+                                    <!-- <div class="col-md-4">
                                         <label for="direccion" class="form-label">Fecha Registro</label>
                                         <input type="hidden" class="form-control" id="idUsuRegistro" name="idUsuRegistro" value='<?php echo $_SESSION['id_Usu']; ?>'  title='idUsu' >
                                         <input type="hidden" class="form-control" id="nombreUsuRegistro" name="nombreUsuRegistro" value='<?php echo $_SESSION['usuario_Logeado']; ?>' title='NombreUSu' >
                                         <input type="text" class="form-control" id="fechRegChequeo" readonly value="<?php echo $fecha; ?>" placeholder="" >
-                                    </div>
+                                    </div> -->
                                     <div class="col-md-4">
                                         <label for="direccion" class="form-label">Fecha Chequeo</label>
                                         <input type="text" class="form-control" id="fechaChequeo" >
@@ -81,7 +67,7 @@
                                         <input type="text" class="form-control" id="fechUltSer" name="fechUltSer" readonly>
                                     </div>
                                     <!--DIVICION PARA EL BOTON DEL MODAL DE AJUSTAR LAS ALERTAS-->
-                                    <div class="col-md-4" id="divSemanasGest">
+                                    <div class="col-md-4" id="divDiasGest">
                                         <label for="provincia" class="form-label">Tmp. Gest. días</label>
                                         <input type="number" class="form-control" id="tmpGestacion" >
                                     </div>
@@ -104,10 +90,6 @@
                                             Alarmas
                                         </button>
 									</div>
-                                    <!-- <div class="col-md-4" id="divFechAlert">
-                                        <label for="ciudad" class="form-label">Fecha Alerta</label>
-                                        <input type="text" class="form-control" id="fechaAlerta" readonly>
-                                    </div> -->
                         
                                     <div class="col-md-4" id="">
                                         <label for="provincia" class="form-label" hidden>Responsable</label>
@@ -127,65 +109,69 @@
                                             <!-- cabecera del diálogo -->
                                             <div class="modal-header">
                                                 <h4 class="modal-title">AJUSTE DE ALARMA</h4>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                                <button type="button" id="btnCerrar" class="btn-close" data-bs-dismiss="modal"></button>
                                             </div>
                                         
                                             <!-- cuerpo del diálogo -->
                                             <div class="row ml-3 mt-1">
                                                 <div class="form-check form-switch col-md-6">
-                                                    <input class="form-check-input" type="checkbox" value="" id="checkSecado" name="checkSecado">
-                                                    <label class="form-check-label" for="checkbox1">
+                                                    <input class="form-check-input" type="checkbox" value="scd" id="checkSecado" name="checkSecado">
+                                                    <label class="form-check-label" for="checkSecado" id="secado">
                                                         Secado
                                                     </label>
                                                 </div>
                                                 <div class="form-check form-switch col-md-6">
-                                                    <input class="form-check-input" type="checkbox" value="" id="checkParto" name="checkParto">
-                                                    <label class="form-check-label" for="checkbox1">
+                                                    <input class="form-check-input" type="checkbox" value="prt" id="checkParto" name="checkParto">
+                                                    <label class="form-check-label" for="checkParto" id="parto">
                                                         Parto
                                                     </label>
                                                 </div>
                                             </div>
                                             <div class="modal-body">
-                                                <label for="ciudad" class="form-label">Fecha Alerta</label>
-                                                <input type="text" class="form-control" id="fechaAlerta" readonly>
+                                                <label for="ciudad" class="form-label">Fecha Alerta secado</label>
+                                                <input type="text" class="form-control" id="fechaAlertaSec" readonly>
+                                            </div>
+                                            <div class="modal-body">
+                                                <label for="ciudad" class="form-label">Fecha Alerta parto</label>
+                                                <input type="text" class="form-control" id="fechaAlertaPart" readonly>
                                             </div>
                                             <div class="modal-body">
                                                 <label for="provincia" class="form-label" >Repeticion</label>
                                                 <br>
                                                 <form>
                                                     <div class="form-check form-check-inline">
-                                                        <input class="form-check-input" type="checkbox" value="" id="checkbox4" name="checkbox4">
-                                                        <label class="form-check-label" for="checkbox4">
+                                                        <input class="form-check-input" type="checkbox" value="L" id="checkboxL" name="checkbox4">
+                                                        <label class="form-check-label" for="checkbox4" id="lunes">
                                                         L
                                                         </label>
                                                     </div>
                                                     <div class="form-check form-check-inline">
-                                                        <input class="form-check-input" type="checkbox" value="" id="checkbox5" name="checkbox5">
-                                                        <label class="form-check-label" for="checkbox5">
+                                                        <input class="form-check-input" type="checkbox" value="M" id="checkboxM" name="checkbox5">
+                                                        <label class="form-check-label" for="checkbox5" id="martes">
                                                         M
                                                         </label>
                                                     </div>        
                                                     <div class="form-check form-check-inline">
-                                                        <input class="form-check-input" type="checkbox" value="" id="checkbox3" name="checkbox6">
-                                                        <label class="form-check-label" for="checkbox6">
+                                                        <input class="form-check-input" type="checkbox" value="Mi" id="checkboxMi" name="checkbox6">
+                                                        <label class="form-check-label" for="checkbox6" id="miercoles">
                                                         M
                                                         </label>
                                                     </div> 
                                                     <div class="form-check form-check-inline">
-                                                        <input class="form-check-input" type="checkbox" value="" id="checkbox4" name="checkbox4">
-                                                        <label class="form-check-label" for="checkbox4">
+                                                        <input class="form-check-input" type="checkbox" value="J" id="checkboxJ" name="checkbox4">
+                                                        <label class="form-check-label" for="checkbox4" id="jueves">
                                                         J
                                                         </label>
                                                     </div>
                                                     <div class="form-check form-check-inline">
-                                                        <input class="form-check-input" type="checkbox" value="" id="checkbox5" name="checkbox5">
-                                                        <label class="form-check-label" for="checkbox5">
+                                                        <input class="form-check-input" type="checkbox" value="V" id="checkboxV" name="checkbox5">
+                                                        <label class="form-check-label" for="checkbox5" id="viernes">
                                                         V
                                                         </label>
                                                     </div>        
                                                     <div class="form-check form-check-inline">
-                                                        <input class="form-check-input" type="checkbox" value="" id="checkbox3" name="checkbox6">
-                                                        <label class="form-check-label" for="checkbox6">
+                                                        <input class="form-check-input" type="checkbox" value="S" id="checkboxS" name="checkbox6">
+                                                        <label class="form-check-label" for="checkbox6" id="sabado">
                                                         S
                                                         </label>
                                                     </div> 
@@ -199,8 +185,8 @@
                                             </div>
                                             <!-- pie del diálogo -->
                                             <div class="modal-footer">
-                                            <button type="button" class="btn btn-primary" id="" name="">Guardar</button>
-                                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+                                            <button type="button" class="btn btn-primary" id="btnGuardarAlarm" name="btnGuardarAlarm">Guardar</button>
+                                                <button type="button" class="btn btn-danger" id="btnCancelarAlarm" name="btnCancelarAlarm" data-bs-dismiss="modal">Cancelar</button>
                                             </div>
                                             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8" crossorigin="anonymous"></script> 
                                             </div>
@@ -214,7 +200,7 @@
                         <!-- pie del diálogo -->
                         <div class="modal-footer">
                             <button type="button" class="btn btn-primary" id="btnGuardarCheque" name="btnGuardarCheque">Guardar</button>
-                            <button type="button" class="btn btn-danger"   id="btnCancelar" data-dismiss="modal">Cancelar</button>
+                            <button type="button" class="btn btn-danger"   id="btnCancelarCheq" name="btnCancelarCheq" data-dismiss="modal">Cancelar</button>
                         </div>
                     </div>
                 </div>
@@ -245,6 +231,7 @@
                 SERVICIO Y DAR UNA POSIBLE FECHA DEL PARTO
 
                 - que en este formulario se muestre la fecha del 
+                - /*'".$_POST['idanimalCheq']."'*/
             -->
         <!-- </footer>
         

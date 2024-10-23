@@ -62,12 +62,7 @@
               </div>
            </div>
        </div>
-       <div class="alertas">
-            <center><p class="nomAlert">ALERTAS</p></center>
-            <div class="alertasCard">
-                
-            </div>
-       </div>
+      
     </main>
 </body>
 </html>

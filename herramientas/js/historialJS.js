@@ -1,18 +1,21 @@
 $(document).ready(function(){	
 	function ocultarHistorialClinico(){
-		$("#containerCarpetaHistorial").hide();
+		//$("#containerCarpetaHistorial").hide();
+		$("#containerCarpetaHistorial").addClass("hidden");
 		$("#containerBqd").show();
+		
 	}
 	function presentarHistorialClinico(){
-		$("#containerCarpetaHistorial").show();
+		//$("#containerCarpetaHistorial").show();
+		$("#containerCarpetaHistorial").removeClass("hidden").css("display", "block");
 		$("#containerBqd").hide();
 	}
-	$(document).on("click", "#btn_Buscar",function (){
+	$(document).on("click", "#btn_Buscar_history",function (){
 		if($("#dato_txt").val()==""){
 			alertify.error("DEBE INGRESAR TEXTO A BUSCAR.");
 		}else{
 			$.post("../controlador/historial_ctrl.php", {
-				action:'listarAnimales',
+				action:'listarAnimalesHistory',
 				dato_txt:$("#dato_txt").val(),
 				selectVM:$("#selectVM").val()
 			}, function(data){ 
@@ -42,7 +45,6 @@ $(document).ready(function(){
 				$("#unidadBuscado").val(data.nombreUnidadPro);							
 				$("#idUnidadBuscado").val(data.idUnidad_FK);
 				$("#nombreAnimal").text(data.nombreAnimal);
-				
 				$("#CodigoAnimal").text(data.codAnimal);
 				$("#nombreUnidad").text(data.nombreUnidadPro);
 				$("#idAnimal2").val(data.idAnimal2); 		//FORMULARIO FALLECIMIENTOS
@@ -52,9 +54,7 @@ $(document).ready(function(){
 				$("#idAnimalFK").val(data.idAnimalFK);//FORMULARIO VACUNACION		
 				$("#idVacaForm").val(data.idAnimalCelo_fk);	
 				$("#idVacaFormUpdate").val(data.idAnimalCelo_fk);	
-
 				//alert(data.idAnimalCelo_fk)
-
 			}, 'json');			
 		// $('[data-widget="pushmenu"]').PushMenu('toggle');
 		// launchFullScreen(document.documentElement);
